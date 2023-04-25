@@ -1,0 +1,15 @@
+# ninja log v5
+2	401	7041178541867512	zword_autogen/timestamp	fd096275ccdce97f
+2	401	7041178541867512	zword_autogen/mocs_compilation.cpp	fd096275ccdce97f
+2	401	7041178541867512	C:/Users/17129/Documents/zju/oop_cq/zword/build-zword-Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/zword_autogen/timestamp	fd096275ccdce97f
+2	401	7041178541867512	C:/Users/17129/Documents/zju/oop_cq/zword/build-zword-Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/zword_autogen/mocs_compilation.cpp	fd096275ccdce97f
+405	2217	7041178561628132	CMakeFiles/zword.dir/main.cpp.obj	89e4b345016d10d2
+401	2224	7041178561618106	CMakeFiles/zword.dir/zword_autogen/mocs_compilation.cpp.obj	9f81bf28bdf8d681
+403	2226	7041178561659515	CMakeFiles/zword.dir/mainwindow.cpp.obj	4918b9f3d4ccbfbc
+2227	2570	7041178564994425	zword.exe	a7aec10b66001220
+3	262	7041180428083499	zword_autogen/timestamp	fd096275ccdce97f
+3	262	7041180428083499	zword_autogen/mocs_compilation.cpp	fd096275ccdce97f
+3	262	7041180428083499	C:/Users/17129/Documents/zju/oop_cq/zword/build-zword-Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/zword_autogen/timestamp	fd096275ccdce97f
+3	262	7041180428083499	C:/Users/17129/Documents/zju/oop_cq/zword/build-zword-Desktop_Qt_6_5_0_MSVC2019_64bit-Debug/zword_autogen/mocs_compilation.cpp	fd096275ccdce97f
+265	1919	7041180444618707	CMakeFiles/zword.dir/mainwindow.cpp.obj	4918b9f3d4ccbfbc
+1920	2130	7041180446408514	zword.exe	a7aec10b66001220
