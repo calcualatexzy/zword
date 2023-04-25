@@ -3,8 +3,8 @@ zword_autogen/timestamp: \
   CMakeFiles/3.24.2/CMakeCXXCompiler.cmake \
   CMakeFiles/3.24.2/CMakeRCCompiler.cmake \
   CMakeFiles/3.24.2/CMakeSystem.cmake \
-  CMakeFiles/CheckLibraryExists/CheckFunctionExists.cxx \
   C:/Users/17129/Documents/zju/oop_cq/zword/zword/CMakeLists.txt \
+  C:/Users/17129/Documents/zju/oop_cq/zword/zword/application.qrc \
   C:/Users/17129/Documents/zju/oop_cq/zword/zword/main.cpp \
   C:/Users/17129/Documents/zju/oop_cq/zword/zword/mainwindow.cpp \
   C:/Users/17129/Documents/zju/oop_cq/zword/zword/mainwindow.h \
@@ -299,80 +299,23 @@ zword_autogen/timestamp: \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateConfigVersionImpl.cmake \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateTargets.cmake \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateVersionlessTargets.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeCXXCompiler.cmake.in \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeCXXCompilerABI.cpp \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeCXXInformation.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeCompilerIdDetection.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeDetermineCXXCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeDetermineCompileFeatures.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeDetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeDetermineCompilerABI.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeDetermineCompilerId.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeDetermineRCCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeDetermineSystem.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeFindBinUtils.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeFindDependencyMacro.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeGenericSystem.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeNinjaFindMake.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeParseImplicitIncludeInfo.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeParseImplicitLinkInfo.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeParseLibraryArchitecture.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeRCCompiler.cmake.in \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeRCInformation.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeSystem.cmake.in \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeTestCXXCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeTestCompilerCommon.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeTestRCCompiler.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CheckCXXCompilerFlag.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CheckCXXSourceCompiles.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CheckFunctionExists.c \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CheckIncludeFileCXX.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CheckLibraryExists.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/ADSP-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/ARMCC-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/ARMClang-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/AppleClang-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/Borland-DetermineCompiler.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/Clang-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/Clang-DetermineCompilerInternal.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/Comeau-CXX-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/Compaq-CXX-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/Cray-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/Embarcadero-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/Fujitsu-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/FujitsuClang-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/GHS-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/GNU-CXX-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/HP-CXX-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/IAR-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/IBMClang-CXX-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/Intel-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/IntelLLVM-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/LCC-CXX-DetermineCompiler.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/MSVC-CXX.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/MSVC-DetermineCompiler.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/MSVC.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/NVHPC-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/NVIDIA-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/OpenWatcom-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/PGI-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/PathScale-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/SCO-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/SunPro-CXX-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/TI-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/VisualAge-CXX-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/Watcom-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/XL-CXX-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/XLClang-CXX-DetermineCompiler.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Compiler/zOS-CXX-DetermineCompiler.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/FindPackageHandleStandardArgs.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/FindPackageMessage.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/FindThreads.cmake \
@@ -381,8 +324,6 @@ zword_autogen/timestamp: \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Internal/CheckCompilerFlag.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Internal/CheckFlagCommonConfig.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Internal/CheckSourceCompiles.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Internal/FeatureTesting.cmake \
-  D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Platform/Windows-Determine-CXX.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Platform/Windows-MSVC-CXX.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Platform/Windows-MSVC.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Platform/Windows.cmake \
