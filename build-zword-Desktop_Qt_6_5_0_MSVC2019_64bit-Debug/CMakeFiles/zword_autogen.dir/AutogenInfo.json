@@ -263,34 +263,6 @@
 		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6Widgets/Qt6QWindowsVistaStylePluginTargets-debug.cmake",
 		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6Widgets/Qt6QWindowsVistaStylePluginTargets-relwithdebinfo.cmake",
 		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6Widgets/Qt6QWindowsVistaStylePluginAdditionalTargetInfo.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/Qt6ConfigVersion.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/Qt6ConfigVersionImpl.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/Qt6Config.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/Qt6ConfigExtras.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtPublicCMakeVersionHelpers.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/Qt6Targets.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/Qt6VersionlessTargets.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtFeature.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtFeatureCommon.cmake",
-		"D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CheckCXXCompilerFlag.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtPublicAppleHelpers.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtPublicFinalizerHelpers.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtPublicPluginHelpers.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtPublicTargetHelpers.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtPublicWalkLibsHelpers.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtPublicFindPackageHelpers.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtPublicDependencyHelpers.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtPublicTestHelpers.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtPublicToolHelpers.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/QtPublicCMakeHelpers.cmake",
-		"D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CMakeFindDependencyMacro.cmake",
-		"D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/lib/cmake/Qt6/Qt6Dependencies.cmake",
-		"D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/FindThreads.cmake",
-		"D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CheckLibraryExists.cmake",
-		"D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CheckIncludeFileCXX.cmake",
-		"D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/CheckCXXSourceCompiles.cmake",
-		"D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/FindPackageHandleStandardArgs.cmake",
-		"D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/FindPackageMessage.cmake",
 		"C:/Users/17129/Documents/zju/oop_cq/zword/zword/application.qrc"
 	],
 	"CMAKE_SOURCE_DIR" : "C:/Users/17129/Documents/zju/oop_cq/zword/zword",
@@ -299,9 +271,9 @@
 	"HEADERS" : 
 	[
 		[
-			"C:/Users/17129/Documents/zju/oop_cq/zword/zword/mainwindow.h",
+			"C:/Users/17129/Documents/zju/oop_cq/zword/zword/widget.h",
 			"MU",
-			"EWIEGA46WW/moc_mainwindow.cpp",
+			"EWIEGA46WW/moc_widget.cpp",
 			null
 		]
 	],
@@ -365,7 +337,7 @@
 			null
 		],
 		[
-			"C:/Users/17129/Documents/zju/oop_cq/zword/zword/mainwindow.cpp",
+			"C:/Users/17129/Documents/zju/oop_cq/zword/zword/widget.cpp",
 			"MU",
 			null
 		]
