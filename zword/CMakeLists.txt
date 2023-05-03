@@ -14,11 +14,10 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        widget.cpp
-        widget.h
-        widget.ui
+        zword.cpp
+        zword.h
+        zword.ui
 )
-
 qt_add_resources(PROJECT_SOURCES application.qrc)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -6,8 +6,8 @@ zword_autogen/timestamp: \
   C:/Users/17129/Documents/zju/oop_cq/zword/zword/CMakeLists.txt \
   C:/Users/17129/Documents/zju/oop_cq/zword/zword/application.qrc \
   C:/Users/17129/Documents/zju/oop_cq/zword/zword/main.cpp \
-  C:/Users/17129/Documents/zju/oop_cq/zword/zword/widget.cpp \
-  C:/Users/17129/Documents/zju/oop_cq/zword/zword/widget.h \
+  C:/Users/17129/Documents/zju/oop_cq/zword/zword/zword.cpp \
+  C:/Users/17129/Documents/zju/oop_cq/zword/zword/zword.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/q20memory.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/q20type_traits.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/qalgorithms.h \
@@ -140,8 +140,10 @@ zword_autogen/timestamp: \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtGui/qtransform.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtGui/qwindowdefs.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtGui/qwindowdefs_win.h \
-  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/QWidget \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/QMainWindow \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qmainwindow.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qsizepolicy.h \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qtabwidget.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qtwidgets-config.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qtwidgetsexports.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -326,5 +328,5 @@ zword_autogen/timestamp: \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Platform/Windows-MSVC.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Platform/Windows.cmake \
   D:/SoftWare/qt/Qt/Tools/CMake_64/share/cmake-3.24/Modules/Platform/WindowsPaths.cmake \
-  C:/Users/17129/Documents/zju/oop_cq/zword/zword/widget.ui \
+  C:/Users/17129/Documents/zju/oop_cq/zword/zword/zword.ui \
   D:/SoftWare/qt/Qt/Tools/CMake_64/bin/cmake.exe

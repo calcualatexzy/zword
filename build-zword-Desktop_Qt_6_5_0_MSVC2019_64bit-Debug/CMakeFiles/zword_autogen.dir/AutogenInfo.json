@@ -271,9 +271,9 @@
 	"HEADERS" : 
 	[
 		[
-			"C:/Users/17129/Documents/zju/oop_cq/zword/zword/widget.h",
+			"C:/Users/17129/Documents/zju/oop_cq/zword/zword/zword.h",
 			"MU",
-			"EWIEGA46WW/moc_widget.cpp",
+			"EWIEGA46WW/moc_zword.cpp",
 			null
 		]
 	],
@@ -337,7 +337,7 @@
 			null
 		],
 		[
-			"C:/Users/17129/Documents/zju/oop_cq/zword/zword/widget.cpp",
+			"C:/Users/17129/Documents/zju/oop_cq/zword/zword/zword.cpp",
 			"MU",
 			null
 		]

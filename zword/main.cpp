@@ -1,5 +1,5 @@
 
-#include "widget.h"
+#include "zword.h"
 
 #include <QApplication>
 
@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Widget w;
+    zword w;
     w.show();
     return a.exec();
 }
