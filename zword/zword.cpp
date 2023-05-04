@@ -5,6 +5,16 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
+#if defined(QT_PRINTSUPPORT_LIB)
+#include <QtPrintSupport/qtprintsupportglobal.h>
+#if QT_CONFIG(printer)
+#if QT_CONFIG(printdialog)
+#include <QPrintDialog>
+#endif // QT_CONFIG(printdialog)
+#include <QPrinter>
+#endif // QT_CONFIG(printer)
+#endif // QT_PRINTSUPPORT_LIB
+
 zword::zword(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::zword)
@@ -15,6 +25,12 @@ zword::zword(QWidget *parent)
     connect(ui->actionOpen_File, &QAction::triggered, this, &zword::open);
     connect(ui->actionSave_File, &QAction::triggered, this, &zword::save);
     connect(ui->actionSave_As, &QAction::triggered, this, &zword::saveAs);
+    connect(ui->actionPrint, &QAction::triggered, this, &zword::print);
+    connect(ui->actionExit, &QAction::triggered, this, &zword::exit);
+
+#if !defined(QT_PRINTSUPPORT_LIB) || !QT_CONFIG(printer)
+    ui->actionPrint->setEnabled(false);
+#endif
 }
 
 zword::~zword()
@@ -85,4 +101,22 @@ void zword::saveAs()
     QString text = ui->textEdit->toPlainText();
     out << text;
     file.close();
+}
+
+void zword::print()
+{
+#if defined(QT_PRINTSUPPORT_LIB) && QT_CONFIG(printer)
+    QPrinter printDev;
+#if QT_CONFIG(printdialog)
+    QPrintDialog dialog(&printDev, this);
+    if (dialog.exec() == QDialog::Rejected)
+        return;
+#endif // QT_CONFIG(printdialog)
+    ui->textEdit->print(&printDev);
+#endif // QT_CONFIG(printer)
+}
+
+void zword::exit(){
+
+    QWidget::close();
 }

@@ -12,6 +12,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+find_package(Qt6
+    OPTIONAL_COMPONENTS PrintSupport)
+
 set(PROJECT_SOURCES
         main.cpp
         zword.cpp
@@ -59,4 +62,14 @@ install(TARGETS zword
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(zword)
+endif()
+
+target_link_libraries(zword PRIVATE
+    Qt6::Core
+    Qt6::Gui
+    Qt6::Widgets
+)
+
+if(TARGET Qt6::PrintSupport)
+    target_link_libraries(zword PRIVATE Qt6::PrintSupport)
 endif()

@@ -24,6 +24,8 @@ private slots:
     void save();
     void open();
     void saveAs();
+    void print();
+    void exit();
 
 private:
     Ui::zword *ui;
