@@ -9,8 +9,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+# find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 find_package(Qt6
     OPTIONAL_COMPONENTS PrintSupport)
@@ -23,7 +23,7 @@ set(PROJECT_SOURCES
 )
 qt_add_resources(PROJECT_SOURCES application.qrc)
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+if(6 GREATER_EQUAL 6)
     qt_add_executable(zword
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
@@ -46,7 +46,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(zword PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(zword PRIVATE Qt6::Widgets)
 
 set_target_properties(zword PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
