@@ -53,7 +53,7 @@
     <property name="title">
      <string>Edit(E)</string>
     </property>
-    <addaction name="actionRecall"/>
+    <addaction name="actionCopy"/>
     <addaction name="actionCut"/>
     <addaction name="actionPaste"/>
     <addaction name="separator"/>
@@ -110,7 +110,7 @@
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionRecall">
+  <action name="actionCopy">
    <property name="text">
     <string>Copy</string>
    </property>
