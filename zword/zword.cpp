@@ -27,6 +27,16 @@ zword::zword(QWidget *parent)
     connect(ui->actionSave_As, &QAction::triggered, this, &zword::saveAs);
     connect(ui->actionPrint, &QAction::triggered, this, &zword::print);
     connect(ui->actionExit, &QAction::triggered, this, &zword::exit);
+#if QT_CONFIG(clipboard)
+    connect(ui->textEdit, &QTextEdit::copyAvailable, ui->actionCopy, &QAction::setEnabled);
+    connect(ui->actionCopy, &QAction::triggered, ui->textEdit, &QTextEdit::copy);
+    connect(ui->actionCut, &QAction::triggered, ui->textEdit, &QTextEdit::cut);
+    connect(ui->actionPaste, &QAction::triggered, ui->textEdit, &QTextEdit::paste);
+#endif
+    connect(ui->textEdit, &QTextEdit::undoAvailable, ui->actionUndo, &QAction::setEnabled);
+    connect(ui->actionUndo, &QAction::triggered, ui->textEdit, &QTextEdit::undo);
+    connect(ui->textEdit, &QTextEdit::redoAvailable, ui->actionRedo, &QAction::setEnabled);
+    connect(ui->actionRedo, &QAction::triggered, ui->textEdit, &QTextEdit::redo);
 
 #if !defined(QT_PRINTSUPPORT_LIB) || !QT_CONFIG(printer)
     ui->actionPrint->setEnabled(false);

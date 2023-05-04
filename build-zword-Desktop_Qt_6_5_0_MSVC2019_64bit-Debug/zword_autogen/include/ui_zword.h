@@ -28,7 +28,7 @@ public:
     QAction *actionNew_File;
     QAction *actionOpen_File;
     QAction *actionSave_File;
-    QAction *actionRecall;
+    QAction *actionCopy;
     QAction *actionCut;
     QAction *actionPaste;
     QAction *actionUndo;
@@ -57,8 +57,8 @@ public:
         actionOpen_File->setObjectName("actionOpen_File");
         actionSave_File = new QAction(zword);
         actionSave_File->setObjectName("actionSave_File");
-        actionRecall = new QAction(zword);
-        actionRecall->setObjectName("actionRecall");
+        actionCopy = new QAction(zword);
+        actionCopy->setObjectName("actionCopy");
         actionCut = new QAction(zword);
         actionCut->setObjectName("actionCut");
         actionPaste = new QAction(zword);
@@ -108,7 +108,7 @@ public:
         menuFile->addSeparator();
         menuFile->addAction(actionPrint);
         menuFile->addAction(actionExit);
-        menuEdit->addAction(actionRecall);
+        menuEdit->addAction(actionCopy);
         menuEdit->addAction(actionCut);
         menuEdit->addAction(actionPaste);
         menuEdit->addSeparator();
@@ -142,9 +142,9 @@ public:
 #if QT_CONFIG(shortcut)
         actionSave_File->setShortcut(QCoreApplication::translate("zword", "Ctrl+S", nullptr));
 #endif // QT_CONFIG(shortcut)
-        actionRecall->setText(QCoreApplication::translate("zword", "Copy", nullptr));
+        actionCopy->setText(QCoreApplication::translate("zword", "Copy", nullptr));
 #if QT_CONFIG(shortcut)
-        actionRecall->setShortcut(QCoreApplication::translate("zword", "Ctrl+C", nullptr));
+        actionCopy->setShortcut(QCoreApplication::translate("zword", "Ctrl+C", nullptr));
 #endif // QT_CONFIG(shortcut)
         actionCut->setText(QCoreApplication::translate("zword", "Cut", nullptr));
 #if QT_CONFIG(shortcut)
