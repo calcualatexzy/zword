@@ -1,0 +1,70 @@
+\documentclass{./source/Report}
+
+\name{许子绎、润润润、陈科}
+\date{\today}
+\course{面向对象程序设计}
+\instructor{陈奇}
+\expname{文本编辑器}%实验名称
+
+\begin{document}
+
+\makecover
+
+\tableofcontents
+
+\newpage
+
+\section{需求分析}
+
+\subsection{要求}
+实现文本编辑器
+\subsection{功能}
+\begin{enumerate}
+    \item 支持基本的文本编辑功能，包括输入、回退、插入、删除、撤销、重做等
+    \item 支持文件的保存和打开
+    \item 支持搜索与替换
+    \item 支持文字格式的设置，包括大小、字体、颜色等
+    \item 支持排版设置，包括对齐方式、自动分页等
+\end{enumerate}
+
+\section{总体设计}
+
+% 实现关键点
+% \begin{itemize}
+%     \item 保存文档的数据结构
+%     \item 如何处理连续输入文档时的内存分配情况，一次分配足够大还是每次都申请一段内存
+%     \item 多级的撤销与重做，如何记录对文挡每次的操作
+%     \item 如何表示文档中不同的文字格式
+%     \item 如何记录段落格式
+%     \item 支持多页文档的时候，如何进行分页
+%     \item 汉字的储存和显示
+% \end{itemize}
+
+\section{系统模块说明}
+%每一部分应有核心类说明
+
+\subsection{界面}
+
+\subsection{存储}
+
+\section{设计难点与解决方案}
+
+\section{总结}
+
+\newpage
+\appendix
+\section{程序使用说明}
+
+\section{项目开发日志}
+
+\subsection{开发准备}
+\subsubsection{环境配置}
+使用 Qt6.5.0 配合 Qt Creator 或 VS2022 作为开发环境，\href{https://blog.csdn.net/m0_62919535/article/details/129340079}{配置 VS + Qt 的参考教程}。
+
+\subsubsection{合作方式}
+使用 github 开设私人仓库并设置合作者实现合作开发，可能使用 PR (Pull Requset) 实现更好的整合。
+
+\subsubsection{文档写著}
+使用 \LaTeX 进行文档的书写。
+
+\end{document}
