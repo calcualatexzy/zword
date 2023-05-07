@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <iostream>
 
 #if defined(QT_PRINTSUPPORT_LIB)
 #include <QtPrintSupport/qtprintsupportglobal.h>
@@ -41,6 +42,9 @@ zword::zword(QWidget *parent)
 #if !defined(QT_PRINTSUPPORT_LIB) || !QT_CONFIG(printer)
     ui->actionPrint->setEnabled(false);
 #endif
+
+    connect(ui->fontComboBox, &QFontComboBox::currentFontChanged, this, &zword::selectFont);
+    connect(ui->textEdit, &QTextEdit::selectionChanged, this, &zword::selectText);
 }
 
 zword::~zword()
@@ -129,4 +133,18 @@ void zword::print()
 void zword::exit(){
 
     QWidget::close();
+}
+
+void zword::selectFont(){
+    //QString selectedText = ui->textEdit->textCursor().selectedText();
+    QFont font = ui->fontComboBox->currentFont();
+    QTextCharFormat format;
+    format.setFont(font);
+    ui->textEdit->textCursor().setCharFormat(format);
+}
+
+void zword::selectText(){
+    QTextCharFormat format = ui->textEdit->textCursor().blockCharFormat();
+    std::cout << format.font().toString().toStdString();
+    ui->fontComboBox->setDisplayFont(format.fontFamilies().toString(), format.font());
 }

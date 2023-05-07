@@ -3,7 +3,8 @@
 #define ZWORD_H
 
 #include <QMainWindow>
-
+#include <QFont>
+#include <QFontComboBox>
 
 
 QT_BEGIN_NAMESPACE
@@ -26,6 +27,8 @@ private slots:
     void saveAs();
     void print();
     void exit();
+    void selectFont();
+    void selectText();
 
 private:
     Ui::zword *ui;
