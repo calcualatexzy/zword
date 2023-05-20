@@ -9,44 +9,27 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-find_package(Qt6
-    OPTIONAL_COMPONENTS PrintSupport)
-
-set(PROJECT_SOURCES
-        main.cpp
-        zword.cpp
-        zword.h
-        zword.ui
+set(SOURCES
+    ${PROJECT_SOURCE_DIR}/src/main.cpp
+    ${PROJECT_SOURCE_DIR}/src/mainwindow.cpp
+    ${PROJECT_SOURCE_DIR}/src/mainwindow.h
+    ${PROJECT_SOURCE_DIR}/src/customDocument.h
+    ${PROJECT_SOURCE_DIR}/src/customDocument.cpp
+    #ui
+    ${PROJECT_SOURCE_DIR}/src/mainwindow.ui
+    #qrc
+    ${PROJECT_SOURCE_DIR}/src/images.qrc
+    ${PROJECT_SOURCE_DIR}/src/styles.qrc
 )
-qt_add_resources(PROJECT_SOURCES application.qrc)
 
-if(6 GREATER_EQUAL 6)
-    qt_add_executable(zword
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET zword APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
-    if(ANDROID)
-        add_library(zword SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(zword
-            ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
+add_executable(${PROJECT_NAME} WIN32 ${SOURCES})
 
-target_link_libraries(zword PRIVATE Qt6::Widgets)
+target_link_libraries(zword PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+target_include_directories(${PROJECT_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/src)
 
 set_target_properties(zword PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
@@ -62,14 +45,4 @@ install(TARGETS zword
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(zword)
-endif()
-
-target_link_libraries(zword PRIVATE
-    Qt6::Core
-    Qt6::Gui
-    Qt6::Widgets
-)
-
-if(TARGET Qt6::PrintSupport)
-    target_link_libraries(zword PRIVATE Qt6::PrintSupport)
 endif()
