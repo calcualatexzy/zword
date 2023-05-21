@@ -1,7 +1,14 @@
 <RCC>
     <qresource prefix="/">
         <file>images/newNote_Regular.png</file>
+        <file>images/newNote_Pressed.png</file>
+        <file>images/newNote_Hovered.png</file>
         <file>images/trashCan_Regular.png</file>
+        <file>images/trashCan_Pressed.png</file>
+        <file>images/trashCan_Hovered.png</file>
+        <file>images/3dots_Regular.png</file>
+        <file>images/3dots_Pressed.png</file>
+        <file>images/3dots_Hovered.png</file>
         <file>images/zword_icon.png</file>
         <file>images/drawer_icon.png</file>
     </qresource>

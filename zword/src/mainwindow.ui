@@ -72,101 +72,12 @@
           <number>0</number>
          </property>
          <widget class="QFrame" name="frameLeft">
-          <property name="minimumSize">
-           <size>
-            <width>185</width>
-            <height>0</height>
-           </size>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
           </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Plain</enum>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QWidget" name="verticalSpacer_upTreeView" native="true">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>20</width>
-                 <height>25</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>25</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QTreeView" name="treeView">
-               <attribute name="headerMinimumSectionSize">
-                <number>18</number>
-               </attribute>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="Line" name="verticalSplitterLine_left">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>1</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>1</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="layoutDirection">
-              <enum>Qt::LeftToRight</enum>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QFrame" name="frameMiddle">
           <property name="minimumSize">
            <size>
             <width>185</width>
@@ -233,16 +144,6 @@
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_3">
                   <item>
-                   <widget class="QPushButton" name="toggleTreeViewButton">
-                    <property name="cursor">
-                     <cursorShape>PointingHandCursor</cursorShape>
-                    </property>
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
                    <spacer name="horizontalSpacer_3">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
@@ -252,7 +153,7 @@
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>10</width>
+                      <width>30</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -369,18 +270,6 @@
                       <verstretch>0</verstretch>
                      </sizepolicy>
                     </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>0</width>
-                      <height>25</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>16777215</width>
-                      <height>22</height>
-                     </size>
-                    </property>
                     <property name="text">
                      <string/>
                     </property>
@@ -410,11 +299,30 @@
                   </item>
                   <item>
                    <widget class="QPushButton" name="newNoteButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>33</width>
+                      <height>25</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>33</width>
+                      <height>25</height>
+                     </size>
+                    </property>
                     <property name="cursor">
                      <cursorShape>PointingHandCursor</cursorShape>
                     </property>
+                    <property name="focusPolicy">
+                     <enum>Qt::NoFocus</enum>
+                    </property>
                     <property name="text">
                      <string/>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="images.qrc">
+                      <normaloff>:/images/newNote_Regular.png</normaloff>:/images/newNote_Regular.png</iconset>
                     </property>
                    </widget>
                   </item>
@@ -597,6 +505,12 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="styleEditorButton">
+                  <property name="minimumSize">
+                   <size>
+                    <width>33</width>
+                    <height>25</height>
+                   </size>
+                  </property>
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
@@ -649,11 +563,27 @@
                 </item>
                 <item>
                  <widget class="QPushButton" name="trashButton">
+                  <property name="minimumSize">
+                   <size>
+                    <width>33</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>33</width>
+                    <height>25</height>
+                   </size>
+                  </property>
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="images.qrc">
+                    <normaloff>:/images/trashCan_Regular.png</normaloff>:/images/trashCan_Regular.png</iconset>
                   </property>
                  </widget>
                 </item>
@@ -695,6 +625,11 @@
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normalon>:/images/3dots_Regular.png</normalon>
+                   </iconset>
                   </property>
                  </widget>
                 </item>
@@ -768,6 +703,8 @@
    <header location="global">customdocument.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>
