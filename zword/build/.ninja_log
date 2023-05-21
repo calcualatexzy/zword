@@ -1,0 +1,16 @@
+# ninja log v5
+2	765	7063807861897277	zword_autogen/timestamp	87878922f65a72ff
+2	765	7063807861897277	zword_autogen/mocs_compilation.cpp	87878922f65a72ff
+2	765	7063807861897277	C:/Users/17129/Documents/zju/oop_cq/zword/zword/build/zword_autogen/timestamp	87878922f65a72ff
+2	765	7063807861897277	C:/Users/17129/Documents/zju/oop_cq/zword/zword/build/zword_autogen/mocs_compilation.cpp	87878922f65a72ff
+768	834	7063807865069221	zword_autogen/UVLADIE3JM/qrc_styles.cpp	ebf7ca9b22815c
+768	834	7063807865069221	C:/Users/17129/Documents/zju/oop_cq/zword/zword/build/zword_autogen/UVLADIE3JM/qrc_styles.cpp	ebf7ca9b22815c
+766	839	7063807865069221	zword_autogen/UVLADIE3JM/qrc_images.cpp	f6a13cda3ab54f7d
+766	839	7063807865069221	C:/Users/17129/Documents/zju/oop_cq/zword/zword/build/zword_autogen/UVLADIE3JM/qrc_images.cpp	f6a13cda3ab54f7d
+846	893	7063807865715676	CMakeFiles/zword.dir/zword_autogen/UVLADIE3JM/qrc_styles.cpp.obj	11b934cb01bc1914
+845	942	7063807866215171	CMakeFiles/zword.dir/zword_autogen/UVLADIE3JM/qrc_images.cpp.obj	3de829820b7a6fb5
+842	4495	7063807901595942	CMakeFiles/zword.dir/src/main.cpp.obj	7bcf9ed55dc3e3d
+844	4582	7063807902532266	CMakeFiles/zword.dir/src/customDocument.cpp.obj	b0f437e0d2fcc8f1
+839	4608	7063807902807586	CMakeFiles/zword.dir/zword_autogen/mocs_compilation.cpp.obj	a2c3bc5628ffd2c3
+841	4717	7063807903817232	CMakeFiles/zword.dir/src/mainwindow.cpp.obj	856fec40c0df6840
+4718	5138	7063807907916846	zword.exe	74bd191dcf0c18fd
