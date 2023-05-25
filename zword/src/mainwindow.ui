@@ -336,6 +336,9 @@
                      <iconset resource="images.qrc">
                       <normaloff>:/images/newNote_Regular.png</normaloff>:/images/newNote_Regular.png</iconset>
                     </property>
+                    <property name="flat">
+                     <bool>true</bool>
+                    </property>
                    </widget>
                   </item>
                  </layout>
@@ -529,6 +532,9 @@
                   <property name="text">
                    <string/>
                   </property>
+                  <property name="flat">
+                   <bool>true</bool>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -597,6 +603,9 @@
                    <iconset resource="images.qrc">
                     <normaloff>:/images/trashCan_Regular.png</normaloff>:/images/trashCan_Regular.png</iconset>
                   </property>
+                  <property name="flat">
+                   <bool>true</bool>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -642,6 +651,9 @@
                    <iconset>
                     <normalon>:/images/3dots_Regular.png</normalon>
                    </iconset>
+                  </property>
+                  <property name="flat">
+                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>

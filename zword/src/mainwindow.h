@@ -9,6 +9,7 @@
 #include <QSplitter>
 #include <QLabel>
 #include "customDocument.h"
+#include "nodedata.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,6 +37,7 @@ private:
     QLineEdit *z_searchEdit;
     QToolButton *z_clearButton;
     CustomDocument *z_textEdit;
+    NodeData* z_currentNodeData;
     QSplitter *z_splitter;
     QWidget *z_foldersWidget;
     QWidget *z_noteListWidget;
@@ -55,7 +57,7 @@ private:
     void setupRightFrame();
     void setupSignalsSlots();
     void setupSearchEdit();
-
+    void setupEditorLogic();
     void setupSplitter();
     void resetEditorSettings();
 

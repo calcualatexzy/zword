@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     , z_searchEdit(nullptr)
     , z_clearButton(nullptr)
     , z_textEdit(nullptr)
+    , z_currentNodeData(nullptr)
     , z_splitter(nullptr)
     , z_foldersWidget(nullptr)
     , z_noteListWidget(nullptr)
@@ -226,8 +227,6 @@ void MainWindow::setupSearchEdit()
 
     z_searchEdit->installEventFilter(this);
 }
-
-
 
 /*!
  * \brief MainWindow::eventFilter
