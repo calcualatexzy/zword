@@ -18,6 +18,12 @@ set(SOURCES
     ${PROJECT_SOURCE_DIR}/src/mainwindow.h
     ${PROJECT_SOURCE_DIR}/src/customDocument.h
     ${PROJECT_SOURCE_DIR}/src/customDocument.cpp
+    ${PROJECT_SOURCE_DIR}/src/noteeditorlogic.h src/noteeditorlogic.cpp
+    ${PROJECT_SOURCE_DIR}/src/noteeditorlogic.h src/noteeditorlogic.h
+    ${PROJECT_SOURCE_DIR}/src/dbmanager.h src/dbmanager.cpp
+    ${PROJECT_SOURCE_DIR}/src/dbmanager.h src/dbmanager.h
+    ${PROJECT_SOURCE_DIR}/src/nodedata.h src/nodedata.cpp
+    ${PROJECT_SOURCE_DIR}/src/nodedata.h src/nodedata.h
     #ui
     ${PROJECT_SOURCE_DIR}/src/mainwindow.ui
     #qrc

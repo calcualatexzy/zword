@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QString>
 #include <QDebug>
+#include <QToolButton>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     , z_newNoteButton(nullptr)
     , z_styleEditorButton(nullptr)
     , z_searchEdit(nullptr)
+    , z_clearButton(nullptr)
     , z_textEdit(nullptr)
     , z_splitter(nullptr)
     , z_foldersWidget(nullptr)
@@ -32,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupRightFrame();
     resetEditorSettings();
     setupSignalsSlots();
+    setupSearchEdit();
 }
 
 MainWindow::~MainWindow()
@@ -192,6 +195,39 @@ void MainWindow::setupSignalsSlots()
     // Style Editor Button
     connect(z_styleEditorButton, &QPushButton::clicked, this, &MainWindow::onStyleEditorButtonClicked);
 }
+
+void MainWindow::setupSearchEdit()
+{
+    // clear button
+    z_clearButton = new QToolButton(z_searchEdit);
+    QPixmap pixmap(QStringLiteral(":images/closeButton.png"));
+    z_clearButton->setIcon(QIcon(pixmap));
+    QSize clearSize(15, 15);
+    z_clearButton->setIconSize(clearSize);
+    z_clearButton->setCursor(Qt::ArrowCursor);
+    z_clearButton->hide();
+
+
+    // search button
+    QToolButton *searchButton = new QToolButton(z_searchEdit);
+    QPixmap newPixmap(QStringLiteral(":images/magnifyingGlass.png"));
+    searchButton->setIcon(QIcon(newPixmap));
+    QSize searchSize(18, 18);
+    searchButton->setIconSize(searchSize);
+    searchButton->setCursor(Qt::ArrowCursor);
+
+    // layout
+    QBoxLayout *layout = new QBoxLayout(QBoxLayout::RightToLeft, z_searchEdit);
+    layout->setContentsMargins(2, 0, 3, 0);
+    layout->addWidget(z_clearButton);
+    layout->addStretch();
+    layout->addWidget(searchButton);
+    z_searchEdit->setLayout(layout);
+
+    z_searchEdit->installEventFilter(this);
+}
+
+
 
 /*!
  * \brief MainWindow::eventFilter

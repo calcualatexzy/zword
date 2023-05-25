@@ -11,5 +11,7 @@
         <file>images/3dots_Hovered.png</file>
         <file>images/zword_icon.png</file>
         <file>images/drawer_icon.png</file>
+        <file>images/magnifyingGlass.png</file>
+        <file>images/closeButton.png</file>
     </qresource>
 </RCC>

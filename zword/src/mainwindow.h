@@ -34,6 +34,7 @@ private:
     QPushButton *z_newNoteButton;
     QPushButton *z_styleEditorButton;
     QLineEdit *z_searchEdit;
+    QToolButton *z_clearButton;
     CustomDocument *z_textEdit;
     QSplitter *z_splitter;
     QWidget *z_foldersWidget;
@@ -53,6 +54,7 @@ private:
     void setupNewNoteButtonAndTrashButton();
     void setupRightFrame();
     void setupSignalsSlots();
+    void setupSearchEdit();
 
     void setupSplitter();
     void resetEditorSettings();
