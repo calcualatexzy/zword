@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/qt,qtcreator,vs,latex,cmake
 # Edit at https://www.toptal.com/developers/gitignore?templates=qt,qtcreator,vs,latex,cmake
 
+build/
+
 ### CMake ###
 CMakeLists.txt.user
 CMakeCache.txt
