@@ -2,12 +2,31 @@
 #include "nodedata.h"
 
 QString NodeData::content() const{
-    return z_content;
+    QString str;
+    for(auto elem : z_content){
+        str += elem;
+        str += QString::fromStdString("\n");
+    }
+    return str;
 }
 
 void NodeData::setContent(const QString &content)
 {
-    z_content = content;
+    std::istringstream iss(content.toStdString());
+    std::string str;
+    int cntline = 0;
+    int size = z_content.size();
+    while(std::getline(iss, str)){
+        if(cntline < size){
+            if(z_content[cntline].toStdString() == str){
+                cntline++;
+                continue;
+            }
+            else z_content[cntline] = QString::fromStdString(str);
+        }
+        z_content.push_back(QString::fromStdString(str));
+        cntline++;
+    }
 }
 
 QString NodeData::primate() const{
@@ -36,6 +55,11 @@ int NodeData::listrow() const
 void NodeData::setListrow(const int& row)
 {
     z_listrow = row;
+}
+
+vector<QString> NodeData::vcontent()
+{
+    return z_content;
 }
 
 

@@ -14,6 +14,7 @@
 #include "customDocument.h"
 #include "nodedata.h"
 #include "theme.h"
+#include "highlighter.h"
 
 #define MAX_NODES 20
 
@@ -44,8 +45,11 @@ private:
     QPushButton *z_styleEditorButton;
     QLineEdit *z_searchEdit;
     QToolButton *z_searchButton;
+    long long z_lastSearchIndex;
+    bool z_isSearching;
     QToolButton *z_clearButton;
     CustomDocument *z_textEdit;
+    Highlighter *z_highlighter;
     vector<NodeData*> z_vNodeData;
     NodeData* z_currentNodeData;
     QStringListModel *z_listModel;

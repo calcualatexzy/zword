@@ -1,5 +1,6 @@
 C:/Users/17129/Documents/zju/oop_cq/zword/zword/build/zword_autogen/UVLADIE3JM/moc_mainwindow.cpp: C:/Users/17129/Documents/zju/oop_cq/zword/zword/src/mainwindow.h \
   C:/Users/17129/Documents/zju/oop_cq/zword/zword/src/customDocument.h \
+  C:/Users/17129/Documents/zju/oop_cq/zword/zword/src/highlighter.h \
   C:/Users/17129/Documents/zju/oop_cq/zword/zword/src/nodedata.h \
   C:/Users/17129/Documents/zju/oop_cq/zword/zword/src/theme.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QDeadlineTimer \
@@ -12,6 +13,7 @@ C:/Users/17129/Documents/zju/oop_cq/zword/zword/build/zword_autogen/UVLADIE3JM/m
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QMutex \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QObject \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QRect \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QRegularExpression \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QSize \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QSizeF \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QString \
@@ -267,6 +269,8 @@ C:/Users/17129/Documents/zju/oop_cq/zword/zword/build/zword_autogen/UVLADIE3JM/m
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtGui/QPaintDevice \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtGui/QPaintDeviceWindow \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtGui/QSurfaceFormat \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtGui/QSyntaxHighlighter \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtGui/QTextCharFormat \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtGui/QTransform \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtGui/QWindow \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtGui/QtGui \

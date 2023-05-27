@@ -10,6 +10,7 @@
 #include <vector>
 #include <QFileDialog>
 #include <QLineEdit>
+#include <QTextDocument>
 #include "theme.h"
 
 
@@ -22,8 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
     , z_styleEditorButton(nullptr)
     , z_searchEdit(nullptr)
     , z_searchButton(nullptr)
+    , z_lastSearchIndex(-1)
+    , z_isSearching(false)
     , z_clearButton(nullptr)
     , z_textEdit(nullptr)
+    , z_highlighter(nullptr)
     , z_currentNodeData(nullptr)
     , z_listModel(nullptr)
     , z_listView(nullptr)
@@ -142,6 +146,8 @@ void MainWindow::setupMainWindow(){
 
     this->setWindowTitle(QStringLiteral("Zword"));
     setWindowIcon(QIcon(QStringLiteral(":/images/zword_icon.png")));
+
+    z_highlighter = new Highlighter(z_textEdit->document());
 }
 
 void MainWindow::setupFonts()
@@ -182,6 +188,7 @@ void MainWindow::setupKeyboardShortcuts()
 {
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_N), this, SLOT(onNewNoteButtonClicked()));
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_D), this, SLOT(onTrashButtonClicked()));
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this, SLOT(onSearchButtonClicked()));
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_S), this, SLOT(saveNodeData()));
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_O), this, SLOT(openNodeData()));
 }
@@ -274,7 +281,7 @@ void MainWindow::setupSignalsSlots()
 
     // Search
     connect(z_searchButton, &QToolButton::clicked, this, &MainWindow::onSearchButtonClicked);
-
+    connect(z_searchEdit, &QLineEdit::returnPressed, this, &MainWindow::onSearchButtonClicked);
 }
 
 void MainWindow::setupSearchEdit()
@@ -484,8 +491,26 @@ void MainWindow::onStyleEditorButtonClicked()
 
 void MainWindow::onSearchButtonClicked()
 {
+    z_isSearching = true;
+    z_textEdit->setReadOnly(z_isSearching);
+    saveNodeData();
+    QString search = z_searchEdit->text();
+    if(search.isEmpty()) return;
+    QTextDocument* doc = z_textEdit->document();
+    QTextCursor ret = doc->find(search, z_lastSearchIndex+1, QTextDocument::FindCaseSensitively);
+    if(!ret.isNull()){
+        z_lastSearchIndex = ret.position() - 1;
+        QList<QTextEdit::ExtraSelection> extra_selections;
 
-    qDebug() << "Search!!";
+        QTextEdit::ExtraSelection line;
+        line.format.setBackground(QColor(255, 255, 0));
+        line.format.setProperty(QTextFormat::FullWidthSelection, true);
+        line.cursor = ret;
+        extra_selections.append(line);
+
+        z_textEdit->setExtraSelections(extra_selections);
+    }
+    qDebug() << z_lastSearchIndex;
 }
 
 void MainWindow::saveNodeData()

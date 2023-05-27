@@ -4,6 +4,10 @@
 
 #include <QObject>
 #include <QFile>
+#include <vector>
+#include <sstream>
+
+using std::vector;
 
 class NodeData
 {
@@ -19,8 +23,10 @@ public:
 
     int listrow() const;
     void setListrow(const int& row);
+    vector<QString> vcontent();
+
 private:
-    QString z_content;
+    vector<QString> z_content;
     QString z_primate;
     QString z_filename;
     int z_listrow;
