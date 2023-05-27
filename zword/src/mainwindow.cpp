@@ -446,6 +446,10 @@ void MainWindow::onTrashButtonClicked()
         z_currentNodeData = *(z_vNodeData.end()-1);
         setCurrentNodetoText();
     }
+    else{
+        z_textEdit->clear();
+        z_editorDateLabel->setText("ZWORD is brilliant!");
+    }
     // z_trashButton->blockSignals(true);
     // z_noteEditorLogic->deleteCurrentNote();
     // z_trashButton->blockSignals(false);
