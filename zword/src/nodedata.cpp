@@ -1,11 +1,6 @@
 
 #include "nodedata.h"
 
-NodeData::NodeData():
-{
-
-}
-
 QString NodeData::content() const{
     return z_content;
 }
@@ -31,6 +26,16 @@ QString NodeData::filename() const{
 void NodeData::setFilename(const QString &filename)
 {
     z_filename = filename;
+}
+
+int NodeData::listrow() const
+{
+    return z_listrow;
+}
+
+void NodeData::setListrow(const int& row)
+{
+    z_listrow = row;
 }
 
 

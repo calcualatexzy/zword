@@ -6,6 +6,12 @@
 #include <QString>
 #include <QDebug>
 #include <QToolButton>
+#include <QMessageBox>
+#include <vector>
+#include <QFileDialog>
+#include <QLineEdit>
+#include "theme.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -15,9 +21,12 @@ MainWindow::MainWindow(QWidget *parent)
     , z_newNoteButton(nullptr)
     , z_styleEditorButton(nullptr)
     , z_searchEdit(nullptr)
+    , z_searchButton(nullptr)
     , z_clearButton(nullptr)
     , z_textEdit(nullptr)
     , z_currentNodeData(nullptr)
+    , z_listModel(nullptr)
+    , z_listView(nullptr)
     , z_splitter(nullptr)
     , z_foldersWidget(nullptr)
     , z_noteListWidget(nullptr)
@@ -25,17 +34,25 @@ MainWindow::MainWindow(QWidget *parent)
     , z_currentCharsLimit(64)
     , z_currentFontFamily(QStringLiteral("Segoe UI"))
     , z_editorDateLabel(nullptr)
+    , z_currentTheme(Theme::Sepia)
+    , z_currentEditorTextColor(26, 26, 26)
 {
     ui->setupUi(this);
     setupMainWindow();
     setupFonts();
+    setupNodeData();
     // setupKeyboardShortcuts();
     setupNewNoteButtonAndTrashButton();
     setupSplitter();
     setupRightFrame();
     resetEditorSettings();
-    setupSignalsSlots();
     setupSearchEdit();
+    setupNodeList();
+
+
+
+    setupKeyboardShortcuts();
+    setupSignalsSlots();
 }
 
 MainWindow::~MainWindow()
@@ -48,9 +65,11 @@ MainWindow::~MainWindow()
 void MainWindow::setupMainWindow(){
 
     QFile mainWindowStyleFile(QStringLiteral(":/styles/main-windows.css"));
-    mainWindowStyleFile.open(QFile::ReadOnly);
-    z_styleSheet = QString::fromLatin1(mainWindowStyleFile.readAll());
-    setStyleSheet(z_styleSheet);
+    if(mainWindowStyleFile.isReadable()){
+        mainWindowStyleFile.open(QFile::ReadOnly);
+        z_styleSheet = QString::fromLatin1(mainWindowStyleFile.readAll());
+        setStyleSheet(z_styleSheet);
+    }
     /**** Apply the stylesheet for all children we change classes for ****/
     // middle frame
     ui->searchEdit->setStyleSheet(z_styleSheet);
@@ -71,6 +90,7 @@ void MainWindow::setupMainWindow(){
     ui->frameRight->setStyleSheet(z_styleSheet);
     ui->frameRightTop->setStyleSheet(z_styleSheet);
 
+    ui->searchEdit->setStyleSheet(z_styleSheet);
 
     z_newNoteButton = ui->newNoteButton;
     z_trashButton = ui->trashButton;
@@ -116,7 +136,7 @@ void MainWindow::setupMainWindow(){
     QFont titleFont(z_displayFont, 10, QFont::DemiBold);
     ui->listviewLabel1->setFont(titleFont);
     ui->listviewLabel2->setFont(titleFont);
-    ui->listviewLabel1->setText("Opening List...");
+    ui->listviewLabel1->setText("Open Documents");
 
     z_editorDateLabel->setText("Welcome!");
 
@@ -152,6 +172,28 @@ void MainWindow::setupSplitter()
     z_splitter->setCollapsible(2, false);
 }
 
+void MainWindow::setupNodeData()
+{
+
+}
+
+
+void MainWindow::setupKeyboardShortcuts()
+{
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_N), this, SLOT(onNewNoteButtonClicked()));
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_D), this, SLOT(onTrashButtonClicked()));
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_S), this, SLOT(saveNodeData()));
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_O), this, SLOT(openNodeData()));
+}
+
+void MainWindow::setupNodeList()
+{
+    z_listView = ui->listView;
+    z_listModel = new QStringListModel(this);
+    z_listView->setModel(z_listModel);
+    z_listView->setEditTriggers(QAbstractItemView::SelectedClicked);
+}
+
 /*!
  * \brief MainWindow::setupRightFrame
  * Set up a frame above textEdit and behind the other widgets for a unifed background
@@ -162,6 +204,38 @@ void MainWindow::setupRightFrame()
     ui->frameRightTop->installEventFilter(this);
 }
 
+/*!
+ * \brief MainWindow::setTheme
+ * Changes the app theme
+ */
+void MainWindow::setTheme(Theme theme)
+{
+    z_currentTheme = theme;
+
+    setCSSThemeAndUpdate(this, theme);
+    setCSSThemeAndUpdate(ui->verticalSpacer_upSearchEdit, theme);
+    setCSSThemeAndUpdate(ui->verticalSpacer_upSearchEdit2, theme);
+    setCSSThemeAndUpdate(ui->styleEditorButton, theme);
+    setCSSThemeAndUpdate(ui->listviewLabel1, theme);
+    setCSSThemeAndUpdate(ui->searchEdit, theme);
+    setCSSThemeAndUpdate(ui->frameRight, z_currentTheme);
+    setCSSThemeAndUpdate(ui->frameRightTop, z_currentTheme);
+
+    switch (theme) {
+    case Theme::Light: {
+        z_currentEditorTextColor = QColor(26, 26, 26);
+        break;
+    }
+    case Theme::Dark: {
+        z_currentEditorTextColor = QColor(204, 204, 204);
+        break;
+    }
+    case Theme::Sepia: {
+        z_currentEditorTextColor = QColor(95, 74, 50);
+        break;
+    }
+    }
+}
 
 void MainWindow::resetEditorSettings()
 {
@@ -171,6 +245,8 @@ void MainWindow::resetEditorSettings()
     z_textEdit->setFont(z_currentSelectedFont);
     z_textEdit->setWordWrapMode(QTextOption::WordWrap);
     z_textEdit->setLineWrapMode(QTextEdit::FixedColumnWidth);
+
+    setTheme(z_currentTheme);
 
     //set tab width
     QFontMetrics currentFontMetrics(z_currentSelectedFont);
@@ -195,10 +271,15 @@ void MainWindow::setupSignalsSlots()
     connect(z_dotsButton, &QPushButton::clicked, this, &MainWindow::onDotsButtonClicked);
     // Style Editor Button
     connect(z_styleEditorButton, &QPushButton::clicked, this, &MainWindow::onStyleEditorButtonClicked);
+
+    // Search
+    connect(z_searchButton, &QToolButton::clicked, this, &MainWindow::onSearchButtonClicked);
+
 }
 
 void MainWindow::setupSearchEdit()
 {
+    z_searchEdit->setAttribute(Qt::WA_MacShowFocusRect, 0);
     // clear button
     z_clearButton = new QToolButton(z_searchEdit);
     QPixmap pixmap(QStringLiteral(":images/closeButton.png"));
@@ -208,21 +289,25 @@ void MainWindow::setupSearchEdit()
     z_clearButton->setCursor(Qt::ArrowCursor);
     z_clearButton->hide();
 
-
     // search button
-    QToolButton *searchButton = new QToolButton(z_searchEdit);
+    z_searchButton = new QToolButton(z_searchEdit);
     QPixmap newPixmap(QStringLiteral(":images/magnifyingGlass.png"));
-    searchButton->setIcon(QIcon(newPixmap));
+    z_searchButton->setIcon(QIcon(newPixmap));
     QSize searchSize(18, 18);
-    searchButton->setIconSize(searchSize);
-    searchButton->setCursor(Qt::ArrowCursor);
+    z_searchButton->setIconSize(searchSize);
+    z_searchButton->setCursor(Qt::ArrowCursor);
 
-    // layout
+    z_searchButton->setToolButtonStyle(Qt::ToolButtonFollowStyle);
+    z_searchButton->setStyleSheet("QToolButton{border_style: flat; background: transparent;}");
+    z_searchEdit->setTextMargins(24, 0, 0, 0);
+
+    //layout
     QBoxLayout *layout = new QBoxLayout(QBoxLayout::RightToLeft, z_searchEdit);
     layout->setContentsMargins(2, 0, 3, 0);
+
     layout->addWidget(z_clearButton);
     layout->addStretch();
-    layout->addWidget(searchButton);
+    layout->addWidget(z_searchButton);
     z_searchEdit->setLayout(layout);
 
     z_searchEdit->installEventFilter(this);
@@ -305,22 +390,15 @@ void MainWindow::onNewNoteButtonPressed()
  */
 void MainWindow::onNewNoteButtonClicked()
 {
-    // if (!z_newNoteButton->isVisible()) {
-    //     return;
-    // }
-    // if (z_listViewLogic->isAnimationRunning()) {
-    //     return;
-    // }
     z_newNoteButton->setIcon(QIcon(QStringLiteral(":/images/newNote_Regular.png")));
 
-    // save the data of the previous selected
-    // z_noteEditorLogic->saveNoteToDB();
-
-    // if (!z_searchEdit->text().isEmpty()) {
-    //     z_listViewLogic->clearSearch(true);
-    // } else {
-    //     createNewNote();
-    // }
+    if(!z_vNodeData.empty()){
+        saveNodeData();
+    }
+    NodeData* newNodeData = new NodeData;
+    z_vNodeData.push_back(newNodeData);
+    z_currentNodeData = newNodeData;
+    saveAsNodeData();
 }
 
 /*!
@@ -340,6 +418,34 @@ void MainWindow::onTrashButtonClicked()
 {
     z_trashButton->setIcon(QIcon(QStringLiteral(":/images/trashCan_Regular.png")));
 
+    QModelIndex index;
+    index = z_listView->currentIndex();
+    z_listModel->removeRow(index.row());
+    bool currentNodeChanged = false;
+    vector<NodeData*>::iterator it;
+    for(it = z_vNodeData.begin(); it != z_vNodeData.end(); it++){
+
+        if(*it == z_currentNodeData && !currentNodeChanged){
+            if(it+1==z_vNodeData.end())
+            {
+                z_currentNodeData = nullptr;
+                it = z_vNodeData.erase(it);
+                break;
+            }
+            z_currentNodeData = *(it+1);
+            it = z_vNodeData.erase(it);
+            currentNodeChanged = true;
+        }
+        if(currentNodeChanged){
+            (*it)->setListrow((*it)->listrow()-1);
+        }
+    }
+    if(z_currentNodeData)
+        setCurrentNodetoText();
+    else if(!z_vNodeData.empty()){
+        z_currentNodeData = *(z_vNodeData.end()-1);
+        setCurrentNodetoText();
+    }
     // z_trashButton->blockSignals(true);
     // z_noteEditorLogic->deleteCurrentNote();
     // z_trashButton->blockSignals(false);
@@ -371,3 +477,121 @@ void MainWindow::onStyleEditorButtonClicked()
     //     z_styleEditorWindow.setFocus();
     // }
 }
+
+void MainWindow::onSearchButtonClicked()
+{
+
+    qDebug() << "Search!!";
+}
+
+void MainWindow::saveNodeData()
+{
+    if(z_vNodeData.empty()){
+        NodeData* newNodeData = new NodeData;
+        z_vNodeData.push_back(newNodeData);
+        z_currentNodeData = *(z_vNodeData.end() - 1);
+        saveAsNodeData();
+    }
+    QString filename = z_currentNodeData->filename();
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly | QFile::Text)) {
+        QMessageBox::warning(this, "Warning", "Cannot save file: " + file.errorString());
+        return;
+    }
+    z_editorDateLabel->setText(filename);
+    savePrimateData();
+    QTextStream out(&file);
+    QString text = z_textEdit->toPlainText();
+    out << text;
+    file.close();
+    z_currentNodeData->setContent(text);
+}
+
+void MainWindow::savePrimateData()
+{
+
+}
+
+void MainWindow::openNodeData()
+{
+    bool currentNodeChanged = false;
+    QString filename = QFileDialog::getOpenFileName(this, "Open the file");
+    if(filename.isEmpty())
+        return;
+    QFile file(filename);
+
+    for(auto elem : z_vNodeData){
+        if(elem->filename() == filename){
+            z_currentNodeData = elem;
+            currentNodeChanged = true;
+            break;
+        }
+    }
+
+    z_editorDateLabel->setText(filename);
+
+    if(!currentNodeChanged){
+        if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
+            QMessageBox::warning(this, "Warning", "Cannot open file: " + file.errorString());
+            return;
+        }
+        QTextStream in(&file);
+        QString text = in.readAll();
+        z_textEdit->setText(text);
+        file.close();
+        NodeData* newNodeData = new NodeData;
+        z_vNodeData.push_back(newNodeData);
+        z_currentNodeData = *(z_vNodeData.end() - 1);
+        z_currentNodeData->setContent(text);
+        z_currentNodeData->setFilename(filename);
+        insertCurrentNodetoList();
+    }
+    else{
+        z_textEdit->setText(z_currentNodeData->content());
+        QModelIndex index = z_listModel->index(z_currentNodeData->listrow(), 0);
+        z_listView->setCurrentIndex(index);
+    }
+    qDebug() << z_vNodeData.size();
+}
+
+void MainWindow::insertCurrentNodetoList()
+{
+    z_currentNodeData->setListrow(z_listModel->rowCount());
+    z_listModel->insertRow(z_listModel->rowCount());
+    QModelIndex index = z_listModel->index(z_listModel->rowCount()-1, 0);
+    z_listModel->setData(index, z_currentNodeData->filename(), Qt::DisplayRole);
+    z_listView->setCurrentIndex(index);
+}
+
+void MainWindow::setCurrentNodetoText()
+{
+    z_textEdit->setText(z_currentNodeData->content());
+    z_editorDateLabel->setText(z_currentNodeData->filename());
+}
+
+void MainWindow::saveAsNodeData()
+{
+    QString filename;
+    filename = QFileDialog::getSaveFileName(this, "Save");
+    if (filename.isEmpty())
+            return;
+    z_currentNodeData->setFilename(filename);
+
+    z_editorDateLabel->setText(z_currentNodeData->filename());
+    z_textEdit->setText(QString());
+
+    insertCurrentNodetoList();
+}
+
+void MainWindow::on_listView_clicked(const QModelIndex &index)
+{
+    z_listView->currentIndex() = index;
+    for(auto elem : z_vNodeData){
+        if(elem->listrow() == z_listView->currentIndex().row()){
+            z_currentNodeData = elem;
+            break;
+        }
+    }
+    setCurrentNodetoText();
+}
+

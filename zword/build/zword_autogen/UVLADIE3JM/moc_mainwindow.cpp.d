@@ -1,7 +1,10 @@
 C:/Users/17129/Documents/zju/oop_cq/zword/zword/build/zword_autogen/UVLADIE3JM/moc_mainwindow.cpp: C:/Users/17129/Documents/zju/oop_cq/zword/zword/src/mainwindow.h \
   C:/Users/17129/Documents/zju/oop_cq/zword/zword/src/customDocument.h \
+  C:/Users/17129/Documents/zju/oop_cq/zword/zword/src/nodedata.h \
+  C:/Users/17129/Documents/zju/oop_cq/zword/zword/src/theme.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QDeadlineTimer \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QEvent \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QFile \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QHash \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QList \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QMap \
@@ -13,6 +16,7 @@ C:/Users/17129/Documents/zju/oop_cq/zword/zword/build/zword_autogen/UVLADIE3JM/m
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QSizeF \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QString \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QStringList \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QStringListModel \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QVariant \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QtCore \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtCore/QtCoreDepends \
@@ -381,19 +385,31 @@ C:/Users/17129/Documents/zju/oop_cq/zword/zword/build/zword_autogen/UVLADIE3JM/m
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtGui/qwindowsmimeconverter.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/QLabel \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/QLineEdit \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/QListView \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/QMainWindow \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/QPushButton \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/QSplitter \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/QTextEdit \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/QWidget \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qabstractbutton.h \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qabstractitemdelegate.h \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qabstractitemview.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qabstractscrollarea.h \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qabstractslider.h \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qabstractspinbox.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qframe.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qlabel.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qlineedit.h \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qlistview.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qmainwindow.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qpushbutton.h \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qrubberband.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qsizepolicy.h \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qslider.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qsplitter.h \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qstyle.h \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qstyleoption.h \
+  D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qtabbar.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qtabwidget.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qtextedit.h \
   D:/SoftWare/qt/Qt/6.5.0/msvc2019_64/include/QtWidgets/qtwidgets-config.h \

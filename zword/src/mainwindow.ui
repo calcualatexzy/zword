@@ -139,7 +139,25 @@
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QWidget" name="verticalSpacer_upSearchEdit" native="true"/>
+                 <widget class="QWidget" name="verticalSpacer_upSearchEdit" native="true">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QWidget{
+    background-color: #ffffff;
+}</string>
+                  </property>
+                 </widget>
                 </item>
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -234,18 +252,21 @@
                    <enum>Qt::Vertical</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Minimum</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
-                    <width>0</width>
-                    <height>7</height>
+                    <width>20</width>
+                    <height>2</height>
                    </size>
                   </property>
                  </spacer>
                 </item>
                 <item>
                  <layout class="QHBoxLayout" name="horizontalLayout_scrollArea_3">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
                   <item>
                    <spacer name="horizontalSpacer_leftSearchEdit">
                     <property name="orientation">
@@ -256,7 +277,7 @@
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>10</width>
+                      <width>13</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -288,6 +309,9 @@
                     <property name="cursorPosition">
                      <number>0</number>
                     </property>
+                    <property name="dragEnabled">
+                     <bool>false</bool>
+                    </property>
                     <property name="placeholderText">
                      <string>Search</string>
                     </property>
@@ -303,7 +327,7 @@
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>10</width>
+                      <width>13</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -492,7 +516,7 @@
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>0</width>
-                  <height>27</height>
+                  <height>10</height>
                  </size>
                 </property>
                </spacer>
@@ -724,7 +748,7 @@
   <customwidget>
    <class>CustomDocument</class>
    <extends>QTextEdit</extends>
-   <header location="global">customdocument.h</header>
+   <header location="global">customDocument.h</header>
   </customwidget>
  </customwidgets>
  <resources>
