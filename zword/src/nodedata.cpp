@@ -57,6 +57,39 @@ void NodeData::setListrow(const int& row)
     z_listrow = row;
 }
 
+std::pair<int, int> NodeData::IndexToCoor(int index)
+{
+    int indexCnt = 0;
+    int rowCnt = 0;
+    std::pair<int, int> coor;
+    for(auto elem : z_content){
+        if(indexCnt + elem.length() > index){
+            coor.first = rowCnt;
+            coor.second = index - indexCnt;
+            return coor;
+        }
+        indexCnt += elem.length() + 1;
+        rowCnt++;
+    }
+    coor.first = rowCnt;
+    coor.second = index - indexCnt;
+    return coor;
+}
+
+QString NodeData::rowContent(int row)
+{
+    return z_content[row];
+}
+
+void NodeData::setRowContent(int row, const QString &content)
+{
+    if(row >= z_content.size()){
+        z_content.push_back(content);
+        return;
+    }
+    z_content[row] = content;
+}
+
 vector<QString> NodeData::vcontent()
 {
     return z_content;

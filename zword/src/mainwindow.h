@@ -47,6 +47,9 @@ private:
     QToolButton *z_searchButton;
     long long z_lastSearchIndex;
     bool z_isSearching;
+    bool z_isReplacing;
+    QString z_search;
+    QString z_replace;
     QToolButton *z_clearButton;
     CustomDocument *z_textEdit;
     Highlighter *z_highlighter;
@@ -95,6 +98,7 @@ private slots:
     void onStyleEditorButtonClicked();
     void onSearchButtonClicked();
     void onClearButtonClicked();
+    void replaceSearchEdit();
     void saveNodeData();
     void saveAsNodeData();
     void savePrimateData();
@@ -106,6 +110,10 @@ private slots:
 
     // void createNewNote();
     void on_listView_clicked(const QModelIndex &index);
+
+
+signals:
+    void signalReplace();
 };
 
 #endif // MAINWINDOW_H

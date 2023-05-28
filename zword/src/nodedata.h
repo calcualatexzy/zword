@@ -23,6 +23,11 @@ public:
 
     int listrow() const;
     void setListrow(const int& row);
+
+    std::pair<int, int> IndexToCoor(int index);
+    QString rowContent(int row);
+    void setRowContent(int row, const QString& content);
+
     vector<QString> vcontent();
 
 private:

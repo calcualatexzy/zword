@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     , z_searchButton(nullptr)
     , z_lastSearchIndex(-1)
     , z_isSearching(false)
+    , z_isReplacing(false)
     , z_clearButton(nullptr)
     , z_textEdit(nullptr)
     , z_highlighter(nullptr)
@@ -284,6 +285,7 @@ void MainWindow::setupSignalsSlots()
     connect(z_searchEdit, &QLineEdit::returnPressed, this, &MainWindow::onSearchButtonClicked);
     connect(z_searchEdit, &QLineEdit::textEdited, [this]{z_clearButton->show();});
     connect(z_clearButton, &QToolButton::clicked, this, &MainWindow::onClearButtonClicked);
+    connect(this, &MainWindow::signalReplace, this, &MainWindow::replaceSearchEdit);
 }
 
 void MainWindow::setupSearchEdit()
@@ -377,6 +379,13 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             z_newNoteButton->setIcon(QIcon(QStringLiteral(":/images/newNote_Regular.png")));
             z_trashButton->setIcon(QIcon(QStringLiteral(":/images/trashCan_Regular.png")));
             z_dotsButton->setIcon(QIcon(QStringLiteral(":/images/3dots_Regular.png")));
+            break;
+        }
+        case QEvent::KeyPress:{
+            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+            if(keyEvent->modifiers() == (Qt::ControlModifier) && keyEvent->key() == Qt::Key_H && z_isReplacing){
+                emit signalReplace();
+            }
             break;
         }
         default:
@@ -497,10 +506,22 @@ void MainWindow::onSearchButtonClicked()
     z_isSearching = true;
     z_textEdit->setReadOnly(z_isSearching);
     saveNodeData();
-    QString search = z_searchEdit->text();
-    if(search.isEmpty()) return;
+    z_search = z_searchEdit->text();
+    if(z_search.isEmpty()) return;
+    int findreplace = z_search.toStdString().find("->");
+    if(findreplace != -1){
+        std::string strreplace = z_search.toStdString().substr(findreplace + 2);
+        z_replace = QString::fromStdString(strreplace);
+        z_isReplacing = true;
+        z_search.resize(findreplace);
+    }
+    else{
+        z_isReplacing = false;
+        z_replace.clear();
+    }
+
     QTextDocument* doc = z_textEdit->document();
-    QTextCursor ret = doc->find(search, z_lastSearchIndex+1, QTextDocument::FindCaseSensitively);
+    QTextCursor ret = doc->find(z_search, z_lastSearchIndex+1, QTextDocument::FindCaseSensitively);
     if(!ret.isNull()){
         z_lastSearchIndex = ret.position() - 1;
         QList<QTextEdit::ExtraSelection> extra_selections;
@@ -510,21 +531,44 @@ void MainWindow::onSearchButtonClicked()
         line.format.setProperty(QTextFormat::FullWidthSelection, true);
         line.cursor = ret;
         extra_selections.append(line);
-
         z_textEdit->setExtraSelections(extra_selections);
     }
+    else{
+        z_lastSearchIndex = -1;
+        z_isReplacing = false;
+        z_isSearching = false;
+    }
     qDebug() << z_lastSearchIndex;
+    qDebug() << "search:" << z_search;
+    qDebug() << "replace:" << z_replace;
 }
 
 void MainWindow::onClearButtonClicked()
 {
     z_isSearching = false;
+    z_isReplacing = false;
     z_textEdit->setReadOnly(z_isSearching);
     z_searchEdit->clear();
     z_lastSearchIndex = -1;
     QList<QTextEdit::ExtraSelection> extra_selections;
     z_textEdit->setExtraSelections(extra_selections);
     z_clearButton->hide();
+}
+
+void MainWindow::replaceSearchEdit()
+{
+    std::pair<int, int> coor = z_currentNodeData->IndexToCoor(z_lastSearchIndex + 1 - z_search.length());
+    std::string line = z_currentNodeData->rowContent(coor.first).toStdString();
+    std::string subbehind = line.substr(coor.second + z_search.length());
+    std::string subforward = line.substr(0, coor.second);
+    z_currentNodeData->setRowContent(coor.first, QString::fromStdString(subforward+z_replace.toStdString()+subbehind));
+    z_textEdit->setReadOnly(false);
+    setCurrentNodetoText();
+    QList<QTextEdit::ExtraSelection> extra_selections;
+    z_textEdit->setExtraSelections(extra_selections);
+    z_textEdit->setReadOnly(true);
+    z_isReplacing = false;
+    z_replace.clear();
 }
 
 void MainWindow::saveNodeData()
