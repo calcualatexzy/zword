@@ -8,8 +8,17 @@
 #include <QLineEdit>
 #include <QSplitter>
 #include <QLabel>
+#include <vector>
+#include <QListView>
+#include <QStringListModel>
 #include "customDocument.h"
 #include "nodedata.h"
+#include "theme.h"
+#include "highlighter.h"
+
+#define MAX_NODES 20
+
+using std::vector;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -35,9 +44,16 @@ private:
     QPushButton *z_newNoteButton;
     QPushButton *z_styleEditorButton;
     QLineEdit *z_searchEdit;
+    QToolButton *z_searchButton;
+    long long z_lastSearchIndex;
+    bool z_isSearching;
     QToolButton *z_clearButton;
     CustomDocument *z_textEdit;
+    Highlighter *z_highlighter;
+    vector<NodeData*> z_vNodeData;
     NodeData* z_currentNodeData;
+    QStringListModel *z_listModel;
+    QListView *z_listView;
     QSplitter *z_splitter;
     QWidget *z_foldersWidget;
     QWidget *z_noteListWidget;
@@ -50,6 +66,9 @@ private:
     QFont z_currentSelectedFont;
 
     QLabel *z_editorDateLabel;
+
+    Theme z_currentTheme;
+    QColor z_currentEditorTextColor;
     void setupMainWindow();
     void setupFonts();
     /* setting EventFilters */
@@ -59,6 +78,9 @@ private:
     void setupSearchEdit();
     void setupEditorLogic();
     void setupSplitter();
+    void setupNodeData();
+    void setupKeyboardShortcuts();
+    void setupNodeList();
     void resetEditorSettings();
 
 private slots:
@@ -71,9 +93,19 @@ private slots:
     void onDotsButtonPressed();
     void onDotsButtonClicked();
     void onStyleEditorButtonClicked();
+    void onSearchButtonClicked();
+    void onClearButtonClicked();
+    void saveNodeData();
+    void saveAsNodeData();
+    void savePrimateData();
+    void openNodeData();
+    void insertCurrentNodetoList();
+    void setCurrentNodetoText();
+    void setTheme(Theme theme);
     // void onClearButtonClicked();
 
     // void createNewNote();
+    void on_listView_clicked(const QModelIndex &index);
 };
 
 #endif // MAINWINDOW_H

@@ -4,12 +4,14 @@
 
 #include <QObject>
 #include <QFile>
+#include <vector>
+#include <sstream>
+
+using std::vector;
 
 class NodeData
 {
 public:
-    NodeData();
-
     QString content() const;
     void setContent(const QString& content);
 
@@ -18,10 +20,16 @@ public:
 
     QString filename() const;
     void setFilename(const QString& filename);
+
+    int listrow() const;
+    void setListrow(const int& row);
+    vector<QString> vcontent();
+
 private:
-    QString z_content;
+    vector<QString> z_content;
     QString z_primate;
     QString z_filename;
+    int z_listrow;
 };
 
 Q_DECLARE_METATYPE(NodeData)

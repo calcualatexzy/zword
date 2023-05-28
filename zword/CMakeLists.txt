@@ -20,6 +20,10 @@ set(SOURCES
     ${PROJECT_SOURCE_DIR}/src/customDocument.cpp
     ${PROJECT_SOURCE_DIR}/src/nodedata.h
     ${PROJECT_SOURCE_DIR}/src/nodedata.cpp
+    ${PROJECT_SOURCE_DIR}/src/theme.cpp
+    ${PROJECT_SOURCE_DIR}/src/theme.h
+    ${PROJECT_SOURCE_DIR}/src/highlighter.h
+    ${PROJECT_SOURCE_DIR}/src/highlighter.cpp
     #ui
     ${PROJECT_SOURCE_DIR}/src/mainwindow.ui
     #qrc
