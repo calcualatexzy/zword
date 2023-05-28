@@ -94,6 +94,7 @@ private slots:
     void onDotsButtonClicked();
     void onStyleEditorButtonClicked();
     void onSearchButtonClicked();
+    void onClearButtonClicked();
     void saveNodeData();
     void saveAsNodeData();
     void savePrimateData();

@@ -282,6 +282,8 @@ void MainWindow::setupSignalsSlots()
     // Search
     connect(z_searchButton, &QToolButton::clicked, this, &MainWindow::onSearchButtonClicked);
     connect(z_searchEdit, &QLineEdit::returnPressed, this, &MainWindow::onSearchButtonClicked);
+    connect(z_searchEdit, &QLineEdit::textEdited, [this]{z_clearButton->show();});
+    connect(z_clearButton, &QToolButton::clicked, this, &MainWindow::onClearButtonClicked);
 }
 
 void MainWindow::setupSearchEdit()
@@ -293,7 +295,8 @@ void MainWindow::setupSearchEdit()
     z_clearButton->setIcon(QIcon(pixmap));
     QSize clearSize(15, 15);
     z_clearButton->setIconSize(clearSize);
-    z_clearButton->setCursor(Qt::ArrowCursor);
+    z_clearButton->setCursor(Qt::PointingHandCursor);
+    z_clearButton->setStyleSheet("QToolButton{border_style: flat; background: transparent;}");
     z_clearButton->hide();
 
     // search button
@@ -302,7 +305,7 @@ void MainWindow::setupSearchEdit()
     z_searchButton->setIcon(QIcon(newPixmap));
     QSize searchSize(18, 18);
     z_searchButton->setIconSize(searchSize);
-    z_searchButton->setCursor(Qt::ArrowCursor);
+    z_searchButton->setCursor(Qt::PointingHandCursor);
 
     z_searchButton->setToolButtonStyle(Qt::ToolButtonFollowStyle);
     z_searchButton->setStyleSheet("QToolButton{border_style: flat; background: transparent;}");
@@ -511,6 +514,17 @@ void MainWindow::onSearchButtonClicked()
         z_textEdit->setExtraSelections(extra_selections);
     }
     qDebug() << z_lastSearchIndex;
+}
+
+void MainWindow::onClearButtonClicked()
+{
+    z_isSearching = false;
+    z_textEdit->setReadOnly(z_isSearching);
+    z_searchEdit->clear();
+    z_lastSearchIndex = -1;
+    QList<QTextEdit::ExtraSelection> extra_selections;
+    z_textEdit->setExtraSelections(extra_selections);
+    z_clearButton->hide();
 }
 
 void MainWindow::saveNodeData()
