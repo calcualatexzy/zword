@@ -142,8 +142,8 @@ void MainWindow::setupMainWindow(){
     QFont titleFont(z_displayFont, 10, QFont::DemiBold);
     ui->listviewLabel1->setFont(titleFont);
     ui->listviewLabel2->setFont(titleFont);
-    ui->listviewLabel1->setText("Open Documents");
-
+    ui->listviewLabel1->setText("Document list");
+    ui->listviewLabel2->setText("(^_^)");
     z_editorDateLabel->setText("Welcome!");
 
     this->setWindowTitle(QStringLiteral("Zword"));
