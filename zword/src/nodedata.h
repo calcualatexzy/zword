@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <sstream>
+#include "customDocument.h"
 
 using std::vector;
 using std::pair;
@@ -21,6 +22,7 @@ public:
     void setPrimate(const QString& primate);
 
     void PrimateToContent();
+    void TextEditToPrimate(CustomDocument * textEdit);
 
     QString filename() const;
     void setFilename(const QString& filename);

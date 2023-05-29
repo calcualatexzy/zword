@@ -5,6 +5,11 @@
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 #include <QRegularExpression>
+#include <vector>
+#include <map>
+
+using std::vector;
+using std::pair;
 
 QT_BEGIN_NAMESPACE
 class QTextDocument;

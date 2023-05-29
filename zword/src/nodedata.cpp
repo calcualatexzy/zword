@@ -40,6 +40,7 @@ void NodeData::setPrimate(const QString &primate)
 
 void NodeData::PrimateToContent()
 {
+    z_content.clear();
     int index = 0;
     bool isBold = false;
     pair<int, QString> pairBold;
@@ -63,6 +64,40 @@ void NodeData::PrimateToContent()
         if(elem != '#' && isBold) strBold += elem;
     }
     setContent(content);
+}
+
+void NodeData::TextEditToPrimate(CustomDocument *textEdit)
+{
+    z_primate.clear();
+    z_bold.clear();
+    QTextCursor cursor = textEdit->textCursor();
+    cursor.setCharFormat(textEdit->currentCharFormat());
+    cursor.movePosition(QTextCursor::Start);
+    bool isBold = false;
+    do{
+        textEdit->setTextCursor(cursor);
+        if(textEdit->currentCharFormat().fontWeight() == QFont::Bold){
+            if(!isBold){
+                isBold = true;
+                cursor.movePosition(QTextCursor::Left);
+                textEdit->setTextCursor(cursor);
+                textEdit->insertPlainText("#");
+                cursor.movePosition(QTextCursor::Right);
+                textEdit->setTextCursor(cursor);
+            }
+        }
+        if(textEdit->currentCharFormat().fontWeight() != QFont::Bold && isBold){
+            cursor.movePosition(QTextCursor::Left);
+            textEdit->setTextCursor(cursor);
+            textEdit->insertPlainText("#");
+            cursor.movePosition(QTextCursor::Right);
+            textEdit->setTextCursor(cursor);
+            isBold = false;
+        }
+    }while(cursor.movePosition(QTextCursor::Right));
+    z_primate = textEdit->toPlainText();
+    textEdit->selectAll();
+    textEdit->setFontWeight(QFont::Normal);
 }
 
 QString NodeData::filename() const{

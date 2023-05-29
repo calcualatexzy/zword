@@ -11,6 +11,7 @@
 #include <QFileDialog>
 #include <QLineEdit>
 #include <QTextDocument>
+#include <QTextCursor>
 #include "theme.h"
 
 
@@ -588,10 +589,12 @@ void MainWindow::saveNodeData()
     z_editorDateLabel->setText(filename);
     savePrimateData();
     QTextStream out(&file);
-    QString text = z_textEdit->toPlainText();
-    out << text;
+    z_currentNodeData->TextEditToPrimate(z_textEdit);
+    qDebug() << "save Node data";
+    out << z_currentNodeData->primate();
     file.close();
-    z_currentNodeData->setContent(text);
+    z_currentNodeData->PrimateToContent();
+    setCurrentNodetoText();
 }
 
 void MainWindow::savePrimateData()
@@ -651,12 +654,29 @@ void MainWindow::insertCurrentNodetoList()
 
 void MainWindow::setCurrentNodetoText()
 {
+
     z_textEdit->setText(z_currentNodeData->content());
     z_editorDateLabel->setText(z_currentNodeData->filename());
+
     vector<pair<int, QString>> boldFormat = z_currentNodeData->getBold();
-//    for(auto elem : boldFormat){
-//        z_textEdit->setCursor()
-//    }
+    QTextCharFormat format;
+    z_textEdit->setFocus();
+    QTextCursor cursor = z_textEdit->textCursor();
+    for(auto elem : z_currentNodeData->getBold()){
+        qDebug() << elem.first << elem.second.length();
+        cursor.clearSelection();
+        cursor.movePosition(QTextCursor::Start);
+        cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, elem.first);
+        cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, elem.second.length());
+        format = z_textEdit->currentCharFormat();
+        qDebug() << cursor.selectedText();
+        format.setFontWeight(QFont::Bold);
+        z_textEdit->setTextCursor(cursor);
+        z_textEdit->setCurrentCharFormat(format);
+    }
+    cursor.clearSelection();
+    cursor.movePosition(QTextCursor::Start);
+    z_textEdit->setTextCursor(cursor);
 }
 
 void MainWindow::saveAsNodeData()
