@@ -38,6 +38,33 @@ void NodeData::setPrimate(const QString &primate)
     z_primate = primate;
 }
 
+void NodeData::PrimateToContent()
+{
+    int index = 0;
+    bool isBold = false;
+    pair<int, QString> pairBold;
+    QString strBold;
+    QString content;
+    for(auto elem : z_primate){
+        if(elem == '#' && !isBold){
+            isBold = true;
+            pairBold.first = index;
+        }
+        else if(elem == '#' && isBold){
+            isBold = false;
+            pairBold.second = strBold;
+            z_bold.push_back(pairBold);
+            strBold.clear();
+        }
+        if(elem != '#'){
+            index++;
+            content += elem;
+        }
+        if(elem != '#' && isBold) strBold += elem;
+    }
+    setContent(content);
+}
+
 QString NodeData::filename() const{
     return z_filename;
 }
@@ -93,6 +120,11 @@ void NodeData::setRowContent(int row, const QString &content)
 vector<QString> NodeData::vcontent()
 {
     return z_content;
+}
+
+const vector<pair<int, QString> > &NodeData::getBold()
+{
+    return z_bold;
 }
 
 

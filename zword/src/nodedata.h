@@ -5,9 +5,11 @@
 #include <QObject>
 #include <QFile>
 #include <vector>
+#include <map>
 #include <sstream>
 
 using std::vector;
+using std::pair;
 
 class NodeData
 {
@@ -17,6 +19,8 @@ public:
 
     QString primate() const;
     void setPrimate(const QString& primate);
+
+    void PrimateToContent();
 
     QString filename() const;
     void setFilename(const QString& filename);
@@ -30,10 +34,13 @@ public:
 
     vector<QString> vcontent();
 
+    const vector<pair<int, QString>>& getBold();
+
 private:
     vector<QString> z_content;
     QString z_primate;
     QString z_filename;
+    vector<pair<int, QString>> z_bold;
     int z_listrow;
 };
 

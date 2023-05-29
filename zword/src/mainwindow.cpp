@@ -615,7 +615,6 @@ void MainWindow::openNodeData()
         }
     }
 
-    z_editorDateLabel->setText(filename);
 
     if(!currentNodeChanged){
         if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
@@ -624,20 +623,20 @@ void MainWindow::openNodeData()
         }
         QTextStream in(&file);
         QString text = in.readAll();
-        z_textEdit->setText(text);
         file.close();
         NodeData* newNodeData = new NodeData;
         z_vNodeData.push_back(newNodeData);
         z_currentNodeData = *(z_vNodeData.end() - 1);
-        z_currentNodeData->setContent(text);
+        z_currentNodeData->setPrimate(text);
+        z_currentNodeData->PrimateToContent();
         z_currentNodeData->setFilename(filename);
         insertCurrentNodetoList();
     }
     else{
-        z_textEdit->setText(z_currentNodeData->content());
         QModelIndex index = z_listModel->index(z_currentNodeData->listrow(), 0);
         z_listView->setCurrentIndex(index);
     }
+    setCurrentNodetoText();
     qDebug() << z_vNodeData.size();
 }
 
@@ -654,6 +653,10 @@ void MainWindow::setCurrentNodetoText()
 {
     z_textEdit->setText(z_currentNodeData->content());
     z_editorDateLabel->setText(z_currentNodeData->filename());
+    vector<pair<int, QString>> boldFormat = z_currentNodeData->getBold();
+//    for(auto elem : boldFormat){
+//        z_textEdit->setCursor()
+//    }
 }
 
 void MainWindow::saveAsNodeData()
