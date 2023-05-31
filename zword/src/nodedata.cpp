@@ -45,6 +45,11 @@ void NodeData::PrimateToContent()
     bool isBold = false;
     pair<int, QString> pairBold;
     QString strBold;
+
+    bool isItalic = false;
+    pair<int, QString> pairItalic;
+    QString strItalic;
+
     QString content;
     for(auto elem : z_primate){
         if(elem == '#' && !isBold){
@@ -57,11 +62,24 @@ void NodeData::PrimateToContent()
             z_bold.push_back(pairBold);
             strBold.clear();
         }
-        if(elem != '#'){
+        if(elem != '#' && isBold) strBold += elem;
+
+        if(elem == '~' && !isItalic){
+            isItalic = true;
+            pairItalic.first = index;
+        }
+        else if(elem == '~' && isItalic){
+            isItalic = false;
+            pairItalic.second = strItalic;
+            z_italic.push_back(pairItalic);
+            strItalic.clear();
+        }
+        if(elem != '~' && isItalic) strItalic += elem;
+
+        if(elem != '#' && elem != '~'){
             index++;
             content += elem;
         }
-        if(elem != '#' && isBold) strBold += elem;
     }
     setContent(content);
 }
@@ -70,10 +88,12 @@ void NodeData::TextEditToPrimate(CustomDocument *textEdit)
 {
     z_primate.clear();
     z_bold.clear();
+    z_italic.clear();
     QTextCursor cursor = textEdit->textCursor();
     cursor.setCharFormat(textEdit->currentCharFormat());
     cursor.movePosition(QTextCursor::Start);
     bool isBold = false;
+    bool isItalic = false;
     do{
         textEdit->setTextCursor(cursor);
         if(textEdit->currentCharFormat().fontWeight() == QFont::Bold){
@@ -94,10 +114,30 @@ void NodeData::TextEditToPrimate(CustomDocument *textEdit)
             textEdit->setTextCursor(cursor);
             isBold = false;
         }
+
+        if(textEdit->currentCharFormat().fontItalic() == true){
+            if(!isItalic){
+                isItalic = true;
+                cursor.movePosition(QTextCursor::Left);
+                textEdit->setTextCursor(cursor);
+                textEdit->insertPlainText("~");
+                cursor.movePosition(QTextCursor::Right);
+                textEdit->setTextCursor(cursor);
+            }
+        }
+        if(!textEdit->currentCharFormat().fontItalic() && isItalic){
+            cursor.movePosition(QTextCursor::Left);
+            textEdit->setTextCursor(cursor);
+            textEdit->insertPlainText("~");
+            cursor.movePosition(QTextCursor::Right);
+            textEdit->setTextCursor(cursor);
+            isItalic = false;
+        }
     }while(cursor.movePosition(QTextCursor::Right));
     z_primate = textEdit->toPlainText();
     textEdit->selectAll();
     textEdit->setFontWeight(QFont::Normal);
+    textEdit->setFontItalic(false);
 }
 
 QString NodeData::filename() const{
@@ -160,6 +200,18 @@ vector<QString> NodeData::vcontent()
 const vector<pair<int, QString> > &NodeData::getBold()
 {
     return z_bold;
+}
+
+const vector<pair<int, QString> > &NodeData::getItalic()
+{
+    return z_italic;
+}
+
+void NodeData::resetFormat()
+{
+    z_italic.clear();
+    z_bold.clear();
+    z_primate = content();
 }
 
 

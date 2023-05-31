@@ -37,12 +37,15 @@ public:
     vector<QString> vcontent();
 
     const vector<pair<int, QString>>& getBold();
+    const vector<pair<int, QString>>& getItalic();
+    void resetFormat();
 
 private:
     vector<QString> z_content;
     QString z_primate;
     QString z_filename;
     vector<pair<int, QString>> z_bold;
+    vector<pair<int, QString>> z_italic;
     int z_listrow;
 };
 

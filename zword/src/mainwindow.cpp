@@ -12,6 +12,7 @@
 #include <QLineEdit>
 #include <QTextDocument>
 #include <QTextCursor>
+#include <QFontDialog>
 #include "theme.h"
 
 
@@ -125,7 +126,7 @@ void MainWindow::setupMainWindow(){
 
     z_newNoteButton->setToolTip(tr("Create New Note"));
     z_trashButton->setToolTip(tr("Delete Selected Note"));
-    z_dotsButton->setToolTip(tr("Open Menu"));
+    z_dotsButton->setToolTip(tr("Reset Format"));
     z_styleEditorButton->setToolTip(tr("Style The Editor"));
 
     z_styleEditorButton->setText(QStringLiteral("Aa"));
@@ -254,6 +255,8 @@ void MainWindow::resetEditorSettings()
     z_textEdit->setFont(z_currentSelectedFont);
     z_textEdit->setWordWrapMode(QTextOption::WordWrap);
     z_textEdit->setLineWrapMode(QTextEdit::FixedColumnWidth);
+    z_textEdit->setFontItalic(false);
+    z_textEdit->setFontWeight(QFont::Normal);
 
     setTheme(z_currentTheme);
 
@@ -287,6 +290,7 @@ void MainWindow::setupSignalsSlots()
     connect(z_searchEdit, &QLineEdit::textEdited, [this]{z_clearButton->show();});
     connect(z_clearButton, &QToolButton::clicked, this, &MainWindow::onClearButtonClicked);
     connect(this, &MainWindow::signalReplace, this, &MainWindow::replaceSearchEdit);
+
 }
 
 void MainWindow::setupSearchEdit()
@@ -487,19 +491,21 @@ void MainWindow::onDotsButtonPressed()
 void MainWindow::onDotsButtonClicked()
 {
     z_dotsButton->setIcon(QIcon(QStringLiteral(":/images/3dots_Regular.png")));
+    z_textEdit->selectAll();
+    resetEditorSettings();
+    z_currentNodeData->resetFormat();
 }
 
 void MainWindow::onStyleEditorButtonClicked()
 {
-    // if (z_settingsDatabase->value(QStringLiteral("editorSettingsWindowGeometry"), "NULL") == "NULL")
-    //     z_styleEditorWindow.move(z_newNoteButton->mapToGlobal(QPoint(-z_styleEditorWindow.width() - z_newNoteButton->width(),z_newNoteButton->height())));
 
-    // if (z_styleEditorWindow.isVisible()) {
-    //     z_styleEditorWindow.hide();
-    // } else {
-    //     z_styleEditorWindow.show();
-    //     z_styleEditorWindow.setFocus();
-    // }
+    bool fontSelected;
+    QFont font = QFontDialog::getFont(&fontSelected, this);
+    if (fontSelected)
+    {
+        z_currentFontFamily = font.family();
+        resetEditorSettings();
+    }
 }
 
 void MainWindow::onSearchButtonClicked()
@@ -658,7 +664,6 @@ void MainWindow::setCurrentNodetoText()
     z_textEdit->setText(z_currentNodeData->content());
     z_editorDateLabel->setText(z_currentNodeData->filename());
 
-    vector<pair<int, QString>> boldFormat = z_currentNodeData->getBold();
     QTextCharFormat format;
     z_textEdit->setFocus();
     QTextCursor cursor = z_textEdit->textCursor();
@@ -671,6 +676,22 @@ void MainWindow::setCurrentNodetoText()
         format = z_textEdit->currentCharFormat();
         qDebug() << cursor.selectedText();
         format.setFontWeight(QFont::Bold);
+        z_textEdit->setTextCursor(cursor);
+        z_textEdit->setCurrentCharFormat(format);
+    }
+    cursor.clearSelection();
+    cursor.movePosition(QTextCursor::Start);
+    z_textEdit->setTextCursor(cursor);
+
+    for(auto elem : z_currentNodeData->getItalic()){
+        qDebug() << elem.first << elem.second.length();
+        cursor.clearSelection();
+        cursor.movePosition(QTextCursor::Start);
+        cursor.movePosition(QTextCursor::Right, QTextCursor::MoveAnchor, elem.first);
+        cursor.movePosition(QTextCursor::Right, QTextCursor::KeepAnchor, elem.second.length());
+        format = z_textEdit->currentCharFormat();
+        qDebug() << cursor.selectedText();
+        format.setFontItalic(true);
         z_textEdit->setTextCursor(cursor);
         z_textEdit->setCurrentCharFormat(format);
     }
