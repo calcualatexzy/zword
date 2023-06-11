@@ -14,7 +14,7 @@ SearchIterator::SearchIterator(){
 
 SearchIterator::SearchIterator(QString& search, QTextDocument* doc, int pos){
     pattern = search;
-    text_len = doc->characterCount();
+    text_len = doc->characterCount()-1;
     pattern_len = pattern.length();
     next = new int[pattern_len];
     GetKMPNext();
@@ -69,8 +69,8 @@ SearchIterator& SearchIterator::operator=(const SearchIterator& other){
 
 QTextCursor SearchIterator::operator*(){
     if(hit_at>=-1){
-        qDebug()<<"st_pos "<<hit_at-pattern_len+2;
-        qDebug()<<"ed_pos "<<hit_at+2;
+        // qDebug()<<"st_pos "<<hit_at-pattern_len+2;
+        // qDebug()<<"ed_pos "<<hit_at+2;
         cursor.setPosition(hit_at-pattern_len+2);
         cursor.setPosition(hit_at+2, QTextCursor::KeepAnchor);
     }else cursor.setPosition(0);
@@ -118,6 +118,8 @@ int SearchIterator::GetPos(){
 }
 
 QString SearchIterator::operator[](int pos){
+    // qDebug()<<"pos "<<pos;
+    // qDebug()<<"len "<<text_len;
     cursor.setPosition(pos);
     cursor.setPosition(pos+1, QTextCursor::KeepAnchor);
     return cursor.selectedText();
