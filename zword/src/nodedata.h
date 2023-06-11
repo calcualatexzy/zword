@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <sstream>
+#include <qnamespace.h>
 #include "customDocument.h"
 
 using std::vector;
@@ -40,13 +41,19 @@ public:
     const vector<pair<int, QString>>& getItalic();
     void resetFormat();
 
+    void setStyle(QString styleStr);
+    void setStyle_Key(std::string key, std::string value);
+    std::string getStyle(std::string key);
+
 private:
     vector<QString> z_content;
     QString z_primate;
     QString z_filename;
     vector<pair<int, QString>> z_bold;
     vector<pair<int, QString>> z_italic;
+    int z_alignFlag = Qt::AlignLeft;
     int z_listrow;
+    std::map<std::string, std::string> z_styleMap;
 };
 
 Q_DECLARE_METATYPE(NodeData)

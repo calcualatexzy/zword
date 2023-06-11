@@ -257,12 +257,22 @@ void MainWindow::resetEditorSettings()
     z_textEdit->setLineWrapMode(QTextEdit::FixedColumnWidth);
     z_textEdit->setFontItalic(false);
     z_textEdit->setFontWeight(QFont::Normal);
-
     setTheme(z_currentTheme);
 
     //set tab width
     QFontMetrics currentFontMetrics(z_currentSelectedFont);
     z_textEdit->setTabStopDistance(4 * currentFontMetrics.horizontalAdvance(QLatin1Char(' ')));
+}
+
+void MainWindow::setTextStyle()
+{
+    if(z_currentNodeData->getStyle("Font").empty()){
+        z_textEdit->setFont(z_currentSelectedFont);
+        return;
+    }
+    qDebug() << "setFont";
+    z_currentSelectedFont = QFont(QString::fromStdString(z_currentNodeData->getStyle("Font")), z_currentFontPointSize, QFont::Normal);
+    z_textEdit->setFont(z_currentSelectedFont);
 }
 
 /*!
@@ -504,6 +514,7 @@ void MainWindow::onStyleEditorButtonClicked()
     if (fontSelected)
     {
         z_currentFontFamily = font.family();
+        z_currentNodeData->setStyle_Key("Font", z_currentFontFamily.toStdString());
         resetEditorSettings();
     }
 }
@@ -698,6 +709,7 @@ void MainWindow::setCurrentNodetoText()
     cursor.clearSelection();
     cursor.movePosition(QTextCursor::Start);
     z_textEdit->setTextCursor(cursor);
+    setTextStyle();
 }
 
 void MainWindow::saveAsNodeData()

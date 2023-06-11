@@ -85,6 +85,7 @@ private:
     void setupKeyboardShortcuts();
     void setupNodeList();
     void resetEditorSettings();
+    void setTextStyle();
 
 private slots:
     // void InitData();

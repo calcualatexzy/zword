@@ -50,8 +50,25 @@ void NodeData::PrimateToContent()
     pair<int, QString> pairItalic;
     QString strItalic;
 
+    int isStyle = 0;
+    QString styleStr;
+
     QString content;
     for(auto elem : z_primate){
+        if(elem == '`' && !isStyle){
+            isStyle++;
+            continue;
+        }
+        if(isStyle == 1){
+            if(elem == '`'){
+                setStyle(styleStr);
+                isStyle++;
+                continue;
+            }
+            styleStr += elem;
+            continue;
+        }
+
         if(elem == '#' && !isBold){
             isBold = true;
             pairBold.first = index;
@@ -89,6 +106,11 @@ void NodeData::TextEditToPrimate(CustomDocument *textEdit)
     z_primate.clear();
     z_bold.clear();
     z_italic.clear();
+    z_primate += '`';
+    for(auto elem : z_styleMap){
+        z_primate += elem.first + "," + elem.second + "/";
+    }
+    z_primate += '`';
     QTextCursor cursor = textEdit->textCursor();
     cursor.setCharFormat(textEdit->currentCharFormat());
     cursor.movePosition(QTextCursor::Start);
@@ -134,7 +156,7 @@ void NodeData::TextEditToPrimate(CustomDocument *textEdit)
             isItalic = false;
         }
     }while(cursor.movePosition(QTextCursor::Right));
-    z_primate = textEdit->toPlainText();
+    z_primate += textEdit->toPlainText();
     textEdit->selectAll();
     textEdit->setFontWeight(QFont::Normal);
     textEdit->setFontItalic(false);
@@ -212,6 +234,27 @@ void NodeData::resetFormat()
     z_italic.clear();
     z_bold.clear();
     z_primate = content();
+}
+
+void NodeData::setStyle(QString styleStr)
+{
+    std::string line = styleStr.toStdString();
+    std::istringstream iss(line);
+    std::string key, value;
+    std::getline(iss, key, ',');
+    std::getline(iss, value, '/');
+    z_styleMap[key] = value;
+}
+
+void NodeData::setStyle_Key(std::string key, std::string value)
+{
+    z_styleMap[key] = value;
+}
+
+std::string NodeData::getStyle(std::string key)
+{
+    qDebug() << key << z_styleMap[key];
+    return z_styleMap[key];
 }
 
 
