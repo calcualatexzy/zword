@@ -31,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
     , z_ReplaceExpand(false)
     , z_isSearching(false)
     , z_isReplacing(false)
-    , z_searchingText(nullptr)
     , z_searchClearButton(nullptr)
     , z_replaceClearButton(nullptr)
     , z_textEdit(nullptr)
@@ -69,7 +68,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete z_searchingText;
     delete ui;
 }
 
@@ -458,13 +456,6 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event)
             z_dotsButton->setIcon(QIcon(QStringLiteral(":/images/3dots_Regular.png")));
             break;
         }
-        case QEvent::KeyPress:{
-            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-            if(keyEvent->modifiers() == (Qt::ControlModifier) && keyEvent->key() == Qt::Key_H && z_isReplacing){
-                emit signalReplace();
-            }
-            break;
-        }
         default:
             break;
     }
@@ -587,6 +578,7 @@ void MainWindow::onExpendReplaceButtonClicked(){
         z_ExpendReplaceButton->setIcon(QIcon(pixmap));
         z_ReplaceExpand = false;
         z_replaceEdit->hide();
+        onReplaceClearButtonClicked();
     }else{
         QPixmap pixmap(QStringLiteral(":images/tree-node-expanded.png"));
         z_ExpendReplaceButton->setIcon(QIcon(pixmap));
@@ -609,8 +601,6 @@ void MainWindow::onSearchButtonClicked(){
         z_textEdit->setReadOnly(z_isSearching);
         qDebug()<<"build new Iterator";
         z_searchIterator =  SearchIterator(z_search, z_textEdit->document(), 0);
-        if(z_searchingText!=nullptr)delete z_searchingText;
-        z_searchingText = z_searchIterator.GetText();
         z_textEdit->setExtraSelections(QList<QTextEdit::ExtraSelection>());
     }else if(z_searchIterator.IsEnd())z_searchIterator.Init();
     qDebug()<<"searching next";

@@ -56,7 +56,6 @@ private:
     bool z_isReplacing;
     QString z_search;
     QString z_replace;
-    QString *z_searchingText;
     QToolButton *z_searchClearButton;
     QToolButton *z_replaceClearButton;
     CustomDocument *z_textEdit;

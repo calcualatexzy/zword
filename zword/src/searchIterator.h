@@ -35,18 +35,17 @@ public:
 
     bool IsHit();
 
-    QString *GetText();
-
 private:
+    QString operator[](int pos);
+
     void GetKMPNext();
 
-    bool hit;
+    int hit_at;
     int* next;
     int text_pos, pattern_pos;
     int text_len, pattern_len;
     QTextCursor cursor;
     QString pattern;
-    QString *text;
 };
 
 
