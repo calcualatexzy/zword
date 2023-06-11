@@ -23,12 +23,17 @@ MainWindow::MainWindow(QWidget *parent)
     , z_dotsButton(nullptr)
     , z_newNoteButton(nullptr)
     , z_styleEditorButton(nullptr)
+    , z_ExpendReplaceButton(nullptr)
     , z_searchEdit(nullptr)
+    , z_replaceEdit(nullptr)
     , z_searchButton(nullptr)
     , z_lastSearchIndex(-1)
+    , z_ReplaceExpand(false)
     , z_isSearching(false)
     , z_isReplacing(false)
-    , z_clearButton(nullptr)
+    , z_searchingText(nullptr)
+    , z_searchClearButton(nullptr)
+    , z_replaceClearButton(nullptr)
     , z_textEdit(nullptr)
     , z_highlighter(nullptr)
     , z_currentNodeData(nullptr)
@@ -53,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupSplitter();
     setupRightFrame();
     resetEditorSettings();
-    setupSearchEdit();
+    setupSearchAndReplace();
     setupNodeList();
 
 
@@ -64,6 +69,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    delete z_searchingText;
     delete ui;
 }
 
@@ -80,7 +86,7 @@ void MainWindow::setupMainWindow(){
     /**** Apply the stylesheet for all children we change classes for ****/
     // middle frame
     ui->searchEdit->setStyleSheet(z_styleSheet);
-    ui->verticalSpacer_upSearchEdit->setStyleSheet(z_styleSheet);
+    //ui->verticalSpacer_upSearchEdit->setStyleSheet(z_styleSheet);
     ui->verticalSpacer_upSearchEdit2->setStyleSheet(z_styleSheet);
     ui->listviewLabel1->setStyleSheet(z_styleSheet);
     ui->listviewLabel2->setStyleSheet(z_styleSheet);
@@ -103,7 +109,9 @@ void MainWindow::setupMainWindow(){
     z_trashButton = ui->trashButton;
     z_dotsButton = ui->dotsButton;
     z_styleEditorButton = ui->styleEditorButton;
+    z_ExpendReplaceButton=ui->ExpendReplaceButton;
     z_searchEdit = ui->searchEdit;
+    z_replaceEdit=ui->replaceEdit;
     z_textEdit = ui->textEdit;
     z_editorDateLabel = ui->editorDateLabel;
     z_splitter = ui->splitter;
@@ -157,6 +165,7 @@ void MainWindow::setupFonts()
 {
     z_editorDateLabel->setFont(QFont(z_displayFont, 10, QFont::Bold));
     z_searchEdit->setFont(QFont(z_displayFont, 10));
+    z_replaceEdit->setFont(QFont(z_displayFont, 10));
 }
 
 /*!
@@ -192,6 +201,7 @@ void MainWindow::setupKeyboardShortcuts()
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_N), this, SLOT(onNewNoteButtonClicked()));
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_D), this, SLOT(onTrashButtonClicked()));
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_F), this, SLOT(onSearchButtonClicked()));
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_H), this, SLOT(onReplaceButtonClicked()));
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_S), this, SLOT(saveNodeData()));
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_O), this, SLOT(openNodeData()));
 }
@@ -223,7 +233,7 @@ void MainWindow::setTheme(Theme theme)
     z_currentTheme = theme;
 
     setCSSThemeAndUpdate(this, theme);
-    setCSSThemeAndUpdate(ui->verticalSpacer_upSearchEdit, theme);
+    //setCSSThemeAndUpdate(ui->verticalSpacer_upSearchEdit, theme);
     setCSSThemeAndUpdate(ui->verticalSpacer_upSearchEdit2, theme);
     setCSSThemeAndUpdate(ui->styleEditorButton, theme);
     setCSSThemeAndUpdate(ui->listviewLabel1, theme);
@@ -297,24 +307,40 @@ void MainWindow::setupSignalsSlots()
     // Search
     connect(z_searchButton, &QToolButton::clicked, this, &MainWindow::onSearchButtonClicked);
     connect(z_searchEdit, &QLineEdit::returnPressed, this, &MainWindow::onSearchButtonClicked);
-    connect(z_searchEdit, &QLineEdit::textEdited, [this]{z_clearButton->show();});
-    connect(z_clearButton, &QToolButton::clicked, this, &MainWindow::onClearButtonClicked);
-    connect(this, &MainWindow::signalReplace, this, &MainWindow::replaceSearchEdit);
+    connect(z_searchEdit, &QLineEdit::textEdited, [this]{z_searchClearButton->show();z_isSearching=false;});
+    connect(z_searchClearButton, &QToolButton::clicked, this, &MainWindow::onSearchClearButtonClicked);
 
+    // Replace
+    connect(z_replaceButton, &QToolButton::clicked, this, &MainWindow::onReplaceButtonClicked);
+    connect(z_replaceEdit, &QLineEdit::returnPressed, this, &MainWindow::onReplaceButtonClicked);
+    connect(z_replaceEdit, &QLineEdit::textEdited, [this]{z_replaceClearButton->show();});
+    connect(z_replaceClearButton, &QToolButton::clicked, this, &MainWindow::onReplaceClearButtonClicked);
+
+    connect(z_ExpendReplaceButton, &QPushButton::clicked, this, &MainWindow::onExpendReplaceButtonClicked);
+}
+
+void MainWindow::setupSearchAndReplace(){
+    QPixmap pixmap(QStringLiteral(":images/tree-node-normal.png"));
+    z_ExpendReplaceButton->setIcon(QIcon(pixmap));
+    setupSearchEdit();
+    setupReplaceEdit();
+    z_replaceEdit->hide();
+    z_searchIterator=SearchIterator();
 }
 
 void MainWindow::setupSearchEdit()
-{
+{   
+
     z_searchEdit->setAttribute(Qt::WA_MacShowFocusRect, 0);
     // clear button
-    z_clearButton = new QToolButton(z_searchEdit);
+    z_searchClearButton = new QToolButton(z_searchEdit);
     QPixmap pixmap(QStringLiteral(":images/closeButton.png"));
-    z_clearButton->setIcon(QIcon(pixmap));
+    z_searchClearButton->setIcon(QIcon(pixmap));
     QSize clearSize(15, 15);
-    z_clearButton->setIconSize(clearSize);
-    z_clearButton->setCursor(Qt::PointingHandCursor);
-    z_clearButton->setStyleSheet("QToolButton{border_style: flat; background: transparent;}");
-    z_clearButton->hide();
+    z_searchClearButton->setIconSize(clearSize);
+    z_searchClearButton->setCursor(Qt::PointingHandCursor);
+    z_searchClearButton->setStyleSheet("QToolButton{border_style: flat; background: transparent;}");
+    z_searchClearButton->hide();
 
     // search button
     z_searchButton = new QToolButton(z_searchEdit);
@@ -332,12 +358,48 @@ void MainWindow::setupSearchEdit()
     QBoxLayout *layout = new QBoxLayout(QBoxLayout::RightToLeft, z_searchEdit);
     layout->setContentsMargins(2, 0, 3, 0);
 
-    layout->addWidget(z_clearButton);
+    layout->addWidget(z_searchClearButton);
     layout->addStretch();
     layout->addWidget(z_searchButton);
     z_searchEdit->setLayout(layout);
 
     z_searchEdit->installEventFilter(this);
+}
+
+void MainWindow::setupReplaceEdit(){
+    z_replaceEdit->setAttribute(Qt::WA_MacShowFocusRect, 0);
+    // clear button
+    z_replaceClearButton = new QToolButton(z_replaceEdit);
+    QPixmap pixmap(QStringLiteral(":images/closeButton.png"));
+    z_replaceClearButton->setIcon(QIcon(pixmap));
+    QSize clearSize(15, 15);
+    z_replaceClearButton->setIconSize(clearSize);
+    z_replaceClearButton->setCursor(Qt::PointingHandCursor);
+    z_replaceClearButton->setStyleSheet("QToolButton{border_style: flat; background: transparent;}");
+    z_replaceClearButton->hide();
+
+    // replace button
+    z_replaceButton = new QToolButton(z_replaceEdit);
+    QPixmap newPixmap(QStringLiteral(":images/Glass.png"));
+    z_replaceButton->setIcon(QIcon(newPixmap));
+    QSize searchSize(18, 18);
+    z_replaceButton->setIconSize(searchSize);
+    z_replaceButton->setCursor(Qt::PointingHandCursor);
+
+    z_replaceButton->setToolButtonStyle(Qt::ToolButtonFollowStyle);
+    z_replaceButton->setStyleSheet("QToolButton{border_style: flat; background: transparent;}");
+    z_replaceEdit->setTextMargins(24, 0, 0, 0);
+
+    //layout
+    QBoxLayout *layout = new QBoxLayout(QBoxLayout::RightToLeft, z_replaceEdit);
+    layout->setContentsMargins(2, 0, 3, 0);
+
+    layout->addWidget(z_replaceClearButton);
+    layout->addStretch();
+    layout->addWidget(z_replaceButton);
+    z_replaceEdit->setLayout(layout);
+
+    z_replaceEdit->installEventFilter(this);
 }
 
 /*!
@@ -519,74 +581,94 @@ void MainWindow::onStyleEditorButtonClicked()
     }
 }
 
-void MainWindow::onSearchButtonClicked()
-{
-    z_isSearching = true;
-    z_textEdit->setReadOnly(z_isSearching);
-    saveNodeData();
-    z_search = z_searchEdit->text();
-    if(z_search.isEmpty()) return;
-    int findreplace = z_search.toStdString().find("->");
-    if(findreplace != -1){
-        std::string strreplace = z_search.toStdString().substr(findreplace + 2);
-        z_replace = QString::fromStdString(strreplace);
-        z_isReplacing = true;
-        z_search.resize(findreplace);
+void MainWindow::onExpendReplaceButtonClicked(){
+    if(z_ReplaceExpand){
+        QPixmap pixmap(QStringLiteral(":images/tree-node-normal.png"));
+        z_ExpendReplaceButton->setIcon(QIcon(pixmap));
+        z_ReplaceExpand = false;
+        z_replaceEdit->hide();
+    }else{
+        QPixmap pixmap(QStringLiteral(":images/tree-node-expanded.png"));
+        z_ExpendReplaceButton->setIcon(QIcon(pixmap));
+        z_ReplaceExpand = true;
+        z_replaceEdit->show();
     }
-    else{
-        z_isReplacing = false;
-        z_replace.clear();
-    }
-
-    QTextDocument* doc = z_textEdit->document();
-    QTextCursor ret = doc->find(z_search, z_lastSearchIndex+1, QTextDocument::FindCaseSensitively);
-    if(!ret.isNull()){
-        z_lastSearchIndex = ret.position() - 1;
-        QList<QTextEdit::ExtraSelection> extra_selections;
-
-        QTextEdit::ExtraSelection line;
-        line.format.setBackground(QColor(255, 255, 0));
-        line.format.setProperty(QTextFormat::FullWidthSelection, true);
-        line.cursor = ret;
-        extra_selections.append(line);
-        z_textEdit->setExtraSelections(extra_selections);
-    }
-    else{
-        z_lastSearchIndex = -1;
-        z_isReplacing = false;
-        z_isSearching = false;
-    }
-    qDebug() << z_lastSearchIndex;
-    qDebug() << "search:" << z_search;
-    qDebug() << "replace:" << z_replace;
 }
 
-void MainWindow::onClearButtonClicked()
-{
+void MainWindow::onSearchButtonClicked(){
+    // saveNodeData();
+    z_search = z_searchEdit->text();
+    if(z_search.isEmpty()){
+        onSearchClearButtonClicked();
+        return;
+    }
+
+    qDebug()<<"searching for "<<z_search;
+    if(!z_isSearching){
+        z_isSearching = true;
+        z_textEdit->setReadOnly(z_isSearching);
+        qDebug()<<"build new Iterator";
+        z_searchIterator =  SearchIterator(z_search, z_textEdit->document(), 0);
+        if(z_searchingText!=nullptr)delete z_searchingText;
+        z_searchingText = z_searchIterator.GetText();
+        z_textEdit->setExtraSelections(QList<QTextEdit::ExtraSelection>());
+    }else if(z_searchIterator.IsEnd())z_searchIterator.Init();
+    qDebug()<<"searching next";
+    if(!++z_searchIterator){
+        if(z_searchIterator.IsHit())onSearchButtonClicked();
+        return;
+    }
+    qDebug()<<"searched next";
+
+    QTextEdit::ExtraSelection line;
+    line.format.setBackground(QColor(255, 255, 0));
+    line.format.setProperty(QTextFormat::FullWidthSelection, true);
+    line.cursor = *z_searchIterator;
+    z_textEdit->setExtraSelections(QList<QTextEdit::ExtraSelection>() << line);
+}
+
+void MainWindow::onReplaceButtonClicked(){
+    if(!z_ReplaceExpand)onExpendReplaceButtonClicked();
+    if(!z_isSearching){
+        onSearchButtonClicked();
+        return ;
+    }
+    z_replace=z_replaceEdit->text();
+    if(z_replace.isEmpty()){
+        onReplaceClearButtonClicked();
+        return;
+    }
+    z_isReplacing=true;
+    z_textEdit->setExtraSelections(QList<QTextEdit::ExtraSelection>());
+    QTextCursor cursor = *z_searchIterator;
+    if(cursor.hasSelection()){
+        z_textEdit->setReadOnly(false);
+        cursor.beginEditBlock();
+        cursor.removeSelectedText();
+        cursor.insertText(z_replace);
+        cursor.endEditBlock();
+        z_textEdit->setReadOnly(true);
+        int pos=z_searchIterator.GetPos();
+        z_searchIterator=SearchIterator(z_search, z_textEdit->document(), pos);
+        onSearchButtonClicked();
+    }
+}
+
+void MainWindow::onSearchClearButtonClicked(){   
     z_isSearching = false;
-    z_isReplacing = false;
     z_textEdit->setReadOnly(z_isSearching);
     z_searchEdit->clear();
-    z_lastSearchIndex = -1;
-    QList<QTextEdit::ExtraSelection> extra_selections;
-    z_textEdit->setExtraSelections(extra_selections);
-    z_clearButton->hide();
+    z_searchIterator = SearchIterator();
+    z_textEdit->setExtraSelections(QList<QTextEdit::ExtraSelection>());
+    z_searchClearButton->hide();
 }
 
-void MainWindow::replaceSearchEdit()
-{
-    std::pair<int, int> coor = z_currentNodeData->IndexToCoor(z_lastSearchIndex + 1 - z_search.length());
-    std::string line = z_currentNodeData->rowContent(coor.first).toStdString();
-    std::string subbehind = line.substr(coor.second + z_search.length());
-    std::string subforward = line.substr(0, coor.second);
-    z_currentNodeData->setRowContent(coor.first, QString::fromStdString(subforward+z_replace.toStdString()+subbehind));
-    z_textEdit->setReadOnly(false);
-    setCurrentNodetoText();
-    QList<QTextEdit::ExtraSelection> extra_selections;
-    z_textEdit->setExtraSelections(extra_selections);
-    z_textEdit->setReadOnly(true);
+void MainWindow::onReplaceClearButtonClicked(){
     z_isReplacing = false;
-    z_replace.clear();
+    z_textEdit->setReadOnly(z_isSearching);
+    z_replaceEdit->clear();
+
+    z_replaceClearButton->hide();
 }
 
 void MainWindow::saveNodeData()

@@ -8,6 +8,7 @@
 #include <QLineEdit>
 #include <QSplitter>
 #include <QLabel>
+#include <qpushbutton.h>
 #include <vector>
 #include <QListView>
 #include <QStringListModel>
@@ -15,6 +16,7 @@
 #include "nodedata.h"
 #include "theme.h"
 #include "highlighter.h"
+#include "searchIterator.h"
 
 #define MAX_NODES 20
 
@@ -43,14 +45,20 @@ private:
     QPushButton *z_dotsButton;
     QPushButton *z_newNoteButton;
     QPushButton *z_styleEditorButton;
+    QPushButton *z_ExpendReplaceButton;
     QLineEdit *z_searchEdit;
+    QLineEdit *z_replaceEdit;
     QToolButton *z_searchButton;
+    QToolButton *z_replaceButton;
     long long z_lastSearchIndex;
+    bool z_ReplaceExpand;
     bool z_isSearching;
     bool z_isReplacing;
     QString z_search;
     QString z_replace;
-    QToolButton *z_clearButton;
+    QString *z_searchingText;
+    QToolButton *z_searchClearButton;
+    QToolButton *z_replaceClearButton;
     CustomDocument *z_textEdit;
     Highlighter *z_highlighter;
     vector<NodeData*> z_vNodeData;
@@ -60,6 +68,8 @@ private:
     QSplitter *z_splitter;
     QWidget *z_foldersWidget;
     QWidget *z_noteListWidget;
+
+    SearchIterator z_searchIterator;
 
     QString z_displayFont;
 
@@ -78,7 +88,9 @@ private:
     void setupNewNoteButtonAndTrashButton();
     void setupRightFrame();
     void setupSignalsSlots();
+    void setupSearchAndReplace();
     void setupSearchEdit();
+    void setupReplaceEdit();
     void setupEditorLogic();
     void setupSplitter();
     void setupNodeData();
@@ -97,9 +109,11 @@ private slots:
     void onDotsButtonPressed();
     void onDotsButtonClicked();
     void onStyleEditorButtonClicked();
+    void onExpendReplaceButtonClicked();
     void onSearchButtonClicked();
-    void onClearButtonClicked();
-    void replaceSearchEdit();
+    void onReplaceButtonClicked();
+    void onSearchClearButtonClicked();
+    void onReplaceClearButtonClicked();
     void saveNodeData();
     void saveAsNodeData();
     void savePrimateData();

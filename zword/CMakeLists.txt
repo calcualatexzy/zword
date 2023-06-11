@@ -8,22 +8,18 @@ set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
+file(GLOB MAIN_SOURCES 
+    "${PROJECT_SOURCE_DIR}/src/*.cpp"
+    "${PROJECT_SOURCE_DIR}/src/*.h"
+)
+
 set(SOURCES
-    ${PROJECT_SOURCE_DIR}/src/main.cpp
-    ${PROJECT_SOURCE_DIR}/src/mainwindow.cpp
-    ${PROJECT_SOURCE_DIR}/src/mainwindow.h
-    ${PROJECT_SOURCE_DIR}/src/customDocument.h
-    ${PROJECT_SOURCE_DIR}/src/customDocument.cpp
-    ${PROJECT_SOURCE_DIR}/src/nodedata.h
-    ${PROJECT_SOURCE_DIR}/src/nodedata.cpp
-    ${PROJECT_SOURCE_DIR}/src/theme.cpp
-    ${PROJECT_SOURCE_DIR}/src/theme.h
-    ${PROJECT_SOURCE_DIR}/src/highlighter.h
-    ${PROJECT_SOURCE_DIR}/src/highlighter.cpp
+    ${MAIN_SOURCES}
     #ui
     ${PROJECT_SOURCE_DIR}/src/mainwindow.ui
     #qrc

@@ -13,5 +13,8 @@
         <file>images/drawer_icon.png</file>
         <file>images/magnifyingGlass.png</file>
         <file>images/closeButton.png</file>
+        <file>images/Glass.png</file>
+        <file>images/tree-node-expanded.png</file>
+        <file>images/tree-node-normal.png</file>
     </qresource>
 </RCC>
