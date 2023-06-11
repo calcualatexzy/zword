@@ -14,7 +14,7 @@ SearchIterator::SearchIterator(){
 
 SearchIterator::SearchIterator(QString& search, QTextDocument* doc, int pos){
     pattern = search;
-    text_len = doc->toPlainText().length();
+    text_len = doc->characterCount();
     pattern_len = pattern.length();
     next = new int[pattern_len];
     GetKMPNext();
