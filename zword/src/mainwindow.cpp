@@ -289,7 +289,6 @@ void MainWindow::setTextStyle()
         z_currentSelectedFont = QFont(QString::fromStdString(z_currentNodeData->getStyle("Font")), z_currentFontPointSize, QFont::Normal);
         z_textEdit->setFont(z_currentSelectedFont);
     }
-
     if(z_currentNodeData->getStyle("Color").empty()){
         z_textEdit->setTextColor(z_currentSelectedColor);
     }
@@ -592,6 +591,9 @@ void MainWindow::onStyleEditorButtonClicked()
     {
         z_currentFontFamily = font.family();
         z_currentNodeData->setStyle_Key("Font", z_currentFontFamily.toStdString());
+        z_currentFontPointSize = font.pointSize();
+        if(!z_currentFontPointSize) z_currentFontPointSize = 12;
+        z_currentNodeData->setStyle_Key("Size", std::to_string(z_currentFontPointSize));
         resetEditorSettings();
     }
 }
