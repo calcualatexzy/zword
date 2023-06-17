@@ -241,9 +241,10 @@ void NodeData::setStyle(QString styleStr)
     std::string line = styleStr.toStdString();
     std::istringstream iss(line);
     std::string key, value;
-    std::getline(iss, key, ',');
-    std::getline(iss, value, '/');
-    z_styleMap[key] = value;
+    while(std::getline(iss, key, ',')){
+        std::getline(iss, value, '/');
+        z_styleMap[key] = value;
+    }
 }
 
 void NodeData::setStyle_Key(std::string key, std::string value)

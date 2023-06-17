@@ -12,6 +12,7 @@
 #include <QLineEdit>
 #include <QTextDocument>
 #include <QTextCursor>
+#include <QColorDialog>
 #include <QFontDialog>
 #include "theme.h"
 
@@ -59,8 +60,6 @@ MainWindow::MainWindow(QWidget *parent)
     resetEditorSettings();
     setupSearchAndReplace();
     setupNodeList();
-
-
 
     setupKeyboardShortcuts();
     setupSignalsSlots();
@@ -202,6 +201,9 @@ void MainWindow::setupKeyboardShortcuts()
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_H), this, SLOT(onReplaceButtonClicked()));
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_S), this, SLOT(saveNodeData()));
     new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_O), this, SLOT(openNodeData()));
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_L), this, SLOT(alignLeft()));
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_E), this, SLOT(alignMiddle()));
+    new QShortcut(QKeySequence(Qt::CTRL | Qt::Key_R), this, SLOT(alignRight()));
 }
 
 void MainWindow::setupNodeList()
@@ -258,8 +260,9 @@ void MainWindow::setTheme(Theme theme)
 void MainWindow::resetEditorSettings()
 {
     z_textEdit->setLineWrapColumnOrWidth(z_currentCharsLimit);
-    z_currentFontPointSize = 13;
+    if(!z_currentFontPointSize)  z_currentFontPointSize = 13;
     z_currentSelectedFont = QFont(z_currentFontFamily, z_currentFontPointSize, QFont::Normal);
+    z_currentSelectedColor = QColor();
     z_textEdit->setFont(z_currentSelectedFont);
     z_textEdit->setWordWrapMode(QTextOption::WordWrap);
     z_textEdit->setLineWrapMode(QTextEdit::FixedColumnWidth);
@@ -274,13 +277,34 @@ void MainWindow::resetEditorSettings()
 
 void MainWindow::setTextStyle()
 {
+    if(!z_currentNodeData->getStyle("Size").empty()){
+        std::istringstream iss(z_currentNodeData->getStyle("Size"));
+        iss >> z_currentFontPointSize;
+    }
     if(z_currentNodeData->getStyle("Font").empty()){
         z_textEdit->setFont(z_currentSelectedFont);
-        return;
     }
-    qDebug() << "setFont";
-    z_currentSelectedFont = QFont(QString::fromStdString(z_currentNodeData->getStyle("Font")), z_currentFontPointSize, QFont::Normal);
-    z_textEdit->setFont(z_currentSelectedFont);
+    else{
+        qDebug() << "setFont";
+        z_currentSelectedFont = QFont(QString::fromStdString(z_currentNodeData->getStyle("Font")), z_currentFontPointSize, QFont::Normal);
+        z_textEdit->setFont(z_currentSelectedFont);
+    }
+
+    if(z_currentNodeData->getStyle("Color").empty()){
+        z_textEdit->setTextColor(z_currentSelectedColor);
+    }
+    else{
+        std::string color_str = z_currentNodeData->getStyle("Color");
+        std::istringstream iss(color_str);
+        int r,g,b;
+        iss >> r >> g >> b;
+        qDebug() << r << g << b;
+        z_currentSelectedColor = QColor(r, g, b);
+        QTextCursor cursor = z_textEdit->textCursor();
+        z_textEdit->selectAll();
+        z_textEdit->setTextColor(z_currentSelectedColor);
+        z_textEdit->setTextCursor(cursor);
+    }
 }
 
 /*!
@@ -659,6 +683,44 @@ void MainWindow::onReplaceClearButtonClicked(){
     z_replaceEdit->clear();
 
     z_replaceClearButton->hide();
+}
+
+void MainWindow::pageCut()
+{
+
+}
+
+void MainWindow::alignLeft()
+{
+    QTextCursor cursor = z_textEdit->textCursor();
+    if(cursor.hasSelection()){
+        z_textEdit->setAlignment(Qt::AlignLeft);
+    }
+    else z_textEdit->selectAll();
+    z_textEdit->setAlignment(Qt::AlignLeft);
+    z_textEdit->setTextCursor(cursor);
+}
+
+void MainWindow::alignMiddle()
+{
+    QTextCursor cursor = z_textEdit->textCursor();
+    if(cursor.hasSelection()){
+        z_textEdit->setAlignment(Qt::AlignCenter);
+    }
+    else z_textEdit->selectAll();
+    z_textEdit->setAlignment(Qt::AlignCenter);
+    z_textEdit->setTextCursor(cursor);
+}
+
+void MainWindow::alignRight()
+{
+    QTextCursor cursor = z_textEdit->textCursor();
+    if(cursor.hasSelection()){
+        z_textEdit->setAlignment(Qt::AlignRight);
+    }
+    else z_textEdit->selectAll();
+    z_textEdit->setAlignment(Qt::AlignRight);
+    z_textEdit->setTextCursor(cursor);
 }
 
 void MainWindow::saveNodeData()

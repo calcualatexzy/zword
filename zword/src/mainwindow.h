@@ -76,6 +76,7 @@ private:
     QString z_currentFontFamily;
     int z_currentFontPointSize;
     QFont z_currentSelectedFont;
+    QColor z_currentSelectedColor;
 
     QLabel *z_editorDateLabel;
 
@@ -113,6 +114,10 @@ private slots:
     void onReplaceButtonClicked();
     void onSearchClearButtonClicked();
     void onReplaceClearButtonClicked();
+    void pageCut();
+    void alignLeft();
+    void alignMiddle();
+    void alignRight();
     void saveNodeData();
     void saveAsNodeData();
     void savePrimateData();
