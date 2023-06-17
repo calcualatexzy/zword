@@ -38,9 +38,15 @@ void NodeData::setPrimate(const QString &primate)
     z_primate = primate;
 }
 
+void NodeData::appendPrimate(const QString &append, int pos)
+{
+    z_primate.insert(pos + z_styleMapLength, append);
+}
+
 void NodeData::PrimateToContent()
 {
     z_content.clear();
+    z_alignment.clear();
     int index = 0;
     bool isBold = false;
     pair<int, QString> pairBold;
@@ -52,6 +58,8 @@ void NodeData::PrimateToContent()
 
     int isStyle = 0;
     QString styleStr;
+
+    bool isAlign = false;
 
     QString content;
     for(auto elem : z_primate){
@@ -93,10 +101,22 @@ void NodeData::PrimateToContent()
         }
         if(elem != '~' && isItalic) strItalic += elem;
 
+        if(elem == '\\' && !isAlign){
+            isAlign = true;
+            continue;
+        }
+        if(isAlign){
+            if(elem == 'l') z_alignment.push_back(Qt::AlignLeft);
+            else if(elem == 'm') z_alignment.push_back(Qt::AlignCenter);
+            else if(elem == 'r') z_alignment.push_back(Qt::AlignRight);
+            isAlign = false;
+            continue;
+        }
         if(elem != '#' && elem != '~'){
             index++;
             content += elem;
         }
+
     }
     setContent(content);
 }
@@ -111,6 +131,7 @@ void NodeData::TextEditToPrimate(CustomDocument *textEdit)
         z_primate += elem.first + "," + elem.second + "/";
     }
     z_primate += '`';
+    z_styleMapLength = z_primate.length();
     QTextCursor cursor = textEdit->textCursor();
     cursor.setCharFormat(textEdit->currentCharFormat());
     cursor.movePosition(QTextCursor::Start);
@@ -155,6 +176,23 @@ void NodeData::TextEditToPrimate(CustomDocument *textEdit)
             textEdit->setTextCursor(cursor);
             isItalic = false;
         }
+
+        if(textEdit->alignment() == Qt::AlignLeft && cursor.atBlockEnd()){
+            textEdit->insertPlainText("\\l");
+            cursor.movePosition(QTextCursor::Right);
+            cursor.movePosition(QTextCursor::Right);
+        }
+        else if(textEdit->alignment() == Qt::AlignRight && cursor.atBlockEnd()){
+            textEdit->insertPlainText("\\r");
+            cursor.movePosition(QTextCursor::Right);
+            cursor.movePosition(QTextCursor::Right);
+        }
+        else if(textEdit->alignment() == Qt::AlignCenter && cursor.atBlockEnd()){
+            textEdit->insertPlainText("\\m");
+            cursor.movePosition(QTextCursor::Right);
+            cursor.movePosition(QTextCursor::Right);
+        }
+
     }while(cursor.movePosition(QTextCursor::Right));
     z_primate += textEdit->toPlainText();
     textEdit->selectAll();
@@ -256,6 +294,11 @@ std::string NodeData::getStyle(std::string key)
 {
     qDebug() << key << z_styleMap[key];
     return z_styleMap[key];
+}
+
+vector<Qt::Alignment>& NodeData::getAlign()
+{
+    return z_alignment;
 }
 
 

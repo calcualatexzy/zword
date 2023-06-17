@@ -21,6 +21,7 @@ public:
 
     QString primate() const;
     void setPrimate(const QString& primate);
+    void appendPrimate(const QString& append, int pos);
 
     void PrimateToContent();
     void TextEditToPrimate(CustomDocument * textEdit);
@@ -45,6 +46,8 @@ public:
     void setStyle_Key(std::string key, std::string value);
     std::string getStyle(std::string key);
 
+    vector<Qt::Alignment>& getAlign();
+
 private:
     vector<QString> z_content;
     QString z_primate;
@@ -54,6 +57,8 @@ private:
     int z_alignFlag = Qt::AlignLeft;
     int z_listrow;
     std::map<std::string, std::string> z_styleMap;
+    int z_styleMapLength;
+    vector<Qt::Alignment> z_alignment;
 };
 
 Q_DECLARE_METATYPE(NodeData)

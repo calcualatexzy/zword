@@ -692,13 +692,15 @@ void MainWindow::pageCut()
 
 void MainWindow::alignLeft()
 {
+    QTextCursor lcursor = z_textEdit->textCursor();
     QTextCursor cursor = z_textEdit->textCursor();
-    if(cursor.hasSelection()){
+    if(lcursor.hasSelection()){
         z_textEdit->setAlignment(Qt::AlignLeft);
     }
     else z_textEdit->selectAll();
+
     z_textEdit->setAlignment(Qt::AlignLeft);
-    z_textEdit->setTextCursor(cursor);
+    z_textEdit->setTextCursor(lcursor);
 }
 
 void MainWindow::alignMiddle()
@@ -839,6 +841,17 @@ void MainWindow::setCurrentNodetoText()
         format.setFontItalic(true);
         z_textEdit->setTextCursor(cursor);
         z_textEdit->setCurrentCharFormat(format);
+    }
+    cursor.clearSelection();
+    cursor.movePosition(QTextCursor::Start);
+    z_textEdit->setTextCursor(cursor);
+
+    vector<Qt::Alignment>& alignment = z_currentNodeData->getAlign();
+    for(auto elem : alignment){
+        qDebug() << elem;
+        z_textEdit->setTextCursor(cursor);
+        z_textEdit->setAlignment(elem);
+        cursor.movePosition(QTextCursor::NextBlock);
     }
     cursor.clearSelection();
     cursor.movePosition(QTextCursor::Start);
