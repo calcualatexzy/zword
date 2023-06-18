@@ -142,9 +142,10 @@ void MainWindow::setupMainWindow(){
     z_styleEditorButton->setText(QStringLiteral("Aa"));
     z_styleEditorButton->setFont(QFont(QStringLiteral("Roboto"), 16, QFont::Bold));
 
-    z_colorButton->setText(QStringLiteral("Color"));
+    //z_colorButton->setText(QStringLiteral("Color"));
     z_colorButton->setFont(QFont(QStringLiteral("Roboto"), 8, QFont::Bold));
-
+    QPixmap pixmap(QStringLiteral(":images/font_color.png"));
+    z_colorButton->setIcon(QIcon(pixmap));
 
     // ui->toggleTreeViewButton->setMaximumSize({ 33, 25 });
     // ui->toggleTreeViewButton->setMinimumSize({ 33, 25 });

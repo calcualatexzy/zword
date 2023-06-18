@@ -16,5 +16,6 @@
         <file>images/Glass.png</file>
         <file>images/tree-node-expanded.png</file>
         <file>images/tree-node-normal.png</file>
+        <file>images/font_color.png</file>
     </qresource>
 </RCC>
