@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     , z_dotsButton(nullptr)
     , z_newNoteButton(nullptr)
     , z_styleEditorButton(nullptr)
+    , z_colorButton(nullptr)
     , z_ExpendReplaceButton(nullptr)
     , z_searchEdit(nullptr)
     , z_replaceEdit(nullptr)
@@ -102,10 +103,13 @@ void MainWindow::setupMainWindow(){
 
     ui->searchEdit->setStyleSheet(z_styleSheet);
 
+    ui->horizontalSpacer_6->changeSize(24, 20, QSizePolicy::Minimum, QSizePolicy::Fixed);
+
     z_newNoteButton = ui->newNoteButton;
     z_trashButton = ui->trashButton;
     z_dotsButton = ui->dotsButton;
     z_styleEditorButton = ui->styleEditorButton;
+    z_colorButton = ui->ColorButton;
     z_ExpendReplaceButton=ui->ExpendReplaceButton;
     z_searchEdit = ui->searchEdit;
     z_replaceEdit=ui->replaceEdit;
@@ -133,10 +137,14 @@ void MainWindow::setupMainWindow(){
     z_trashButton->setToolTip(tr("Delete Selected Note"));
     z_dotsButton->setToolTip(tr("Reset Format"));
     z_styleEditorButton->setToolTip(tr("Style The Editor"));
+    z_colorButton->setToolTip(tr("Set Color"));
 
     z_styleEditorButton->setText(QStringLiteral("Aa"));
     z_styleEditorButton->setFont(QFont(QStringLiteral("Roboto"), 16, QFont::Bold));
-    z_styleEditorButton->installEventFilter(this);
+
+    z_colorButton->setText(QStringLiteral("Color"));
+    z_colorButton->setFont(QFont(QStringLiteral("Roboto"), 8, QFont::Bold));
+
 
     // ui->toggleTreeViewButton->setMaximumSize({ 33, 25 });
     // ui->toggleTreeViewButton->setMinimumSize({ 33, 25 });
@@ -174,6 +182,7 @@ void MainWindow::setupNewNoteButtonAndTrashButton()
     z_trashButton->installEventFilter(this);
     z_dotsButton->installEventFilter(this);
     z_styleEditorButton->installEventFilter(this);
+    z_colorButton->installEventFilter(this);
 }
 
 /*!
@@ -324,6 +333,7 @@ void MainWindow::setupSignalsSlots()
     connect(z_dotsButton, &QPushButton::clicked, this, &MainWindow::onDotsButtonClicked);
     // Style Editor Button
     connect(z_styleEditorButton, &QPushButton::clicked, this, &MainWindow::onStyleEditorButtonClicked);
+    connect(z_colorButton, &QPushButton::clicked, this, &MainWindow::onColorButtonClicked);
 
     // Search
     connect(z_searchButton, &QToolButton::clicked, this, &MainWindow::onSearchButtonClicked);
@@ -584,7 +594,7 @@ void MainWindow::onDotsButtonClicked()
 
 void MainWindow::onStyleEditorButtonClicked()
 {
-
+    saveNodeData();
     bool fontSelected;
     QFont font = QFontDialog::getFont(&fontSelected, this);
     if (fontSelected)
@@ -728,21 +738,24 @@ void MainWindow::alignRight()
 }
 
 void MainWindow::saveNodeData()
-{
-    if(z_vNodeData.empty()){
+{   
+    QString content;
+    if(z_currentNodeData==nullptr)content = z_textEdit->toPlainText();
+    if(z_vNodeData.empty()||z_currentNodeData==nullptr){
         NodeData* newNodeData = new NodeData;
         z_vNodeData.push_back(newNodeData);
         z_currentNodeData = *(z_vNodeData.end() - 1);
-        saveAsNodeData();
+        if(!saveAsNodeData())return ;
     }
-    QString filename = z_currentNodeData->filename();
+    if(!content.isEmpty())z_textEdit->setText(content);
+    QString filename;
+    filename = z_currentNodeData->filename();
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly | QFile::Text)) {
         QMessageBox::warning(this, "Warning", "Cannot save file: " + file.errorString());
         return;
     }
     z_editorDateLabel->setText(filename);
-    savePrimateData();
     QTextStream out(&file);
     z_currentNodeData->TextEditToPrimate(z_textEdit);
     qDebug() << "save Node data";
@@ -861,18 +874,19 @@ void MainWindow::setCurrentNodetoText()
     setTextStyle();
 }
 
-void MainWindow::saveAsNodeData()
+bool MainWindow::saveAsNodeData()
 {
     QString filename;
     filename = QFileDialog::getSaveFileName(this, "Save");
     if (filename.isEmpty())
-            return;
+        return 0;
     z_currentNodeData->setFilename(filename);
 
     z_editorDateLabel->setText(z_currentNodeData->filename());
     z_textEdit->setText(QString());
 
     insertCurrentNodetoList();
+    return 1;
 }
 
 void MainWindow::on_listView_clicked(const QModelIndex &index)
@@ -887,3 +901,24 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
     setCurrentNodetoText();
 }
 
+void MainWindow::onColorButtonClicked(){
+    // QColor color = QColorDialog::getColor(Qt::white, this);
+    // if(color.isValid()){
+    //     z_textEdit->setTextColor(color);
+    // }
+    saveNodeData();
+    QColorDialog dialog;
+    dialog.setOption(QColorDialog::ShowAlphaChannel, false);
+    int r=0,g=0,b=0;
+    if (dialog.exec() == QDialog::Accepted) {
+        QColor color = dialog.selectedColor();
+        r = color.red();
+        g = color.green();
+        b = color.blue();
+    }
+    std::ostringstream oss;
+    oss << r << " " << g << " " << b;
+    std::string color_str = oss.str();
+    z_currentNodeData->setStyle_Key("Color", color_str);
+    setCurrentNodetoText();
+}

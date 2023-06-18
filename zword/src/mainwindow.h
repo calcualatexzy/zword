@@ -45,6 +45,7 @@ private:
     QPushButton *z_dotsButton;
     QPushButton *z_newNoteButton;
     QPushButton *z_styleEditorButton;
+    QPushButton *z_colorButton;
     QPushButton *z_ExpendReplaceButton;
     QLineEdit *z_searchEdit;
     QLineEdit *z_replaceEdit;
@@ -114,12 +115,13 @@ private slots:
     void onReplaceButtonClicked();
     void onSearchClearButtonClicked();
     void onReplaceClearButtonClicked();
+    void onColorButtonClicked();
     void pageCut();
     void alignLeft();
     void alignMiddle();
     void alignRight();
     void saveNodeData();
-    void saveAsNodeData();
+    bool saveAsNodeData();
     void savePrimateData();
     void openNodeData();
     void insertCurrentNodetoList();

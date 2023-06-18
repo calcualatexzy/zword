@@ -1,5 +1,6 @@
 
 #include "nodedata.h"
+#include <qdebug.h>
 
 QString NodeData::content() const{
     QString str;
@@ -176,21 +177,39 @@ void NodeData::TextEditToPrimate(CustomDocument *textEdit)
             textEdit->setTextCursor(cursor);
             isItalic = false;
         }
+        if(cursor.atBlockEnd()){
+            if(isBold){
+                // cursor.movePosition(QTextCursor::Left);
+                textEdit->setTextCursor(cursor);
+                textEdit->insertPlainText("#");
+                cursor.movePosition(QTextCursor::Right);
+                textEdit->setTextCursor(cursor);
+                isBold = false;
+            }
+            if(isItalic){
+                // cursor.movePosition(QTextCursor::Left);
+                textEdit->setTextCursor(cursor);
+                textEdit->insertPlainText("~");
+                cursor.movePosition(QTextCursor::Right);
+                textEdit->setTextCursor(cursor);
+                isItalic = false;
+            }
 
-        if(textEdit->alignment() == Qt::AlignLeft && cursor.atBlockEnd()){
-            textEdit->insertPlainText("\\l");
-            cursor.movePosition(QTextCursor::Right);
-            cursor.movePosition(QTextCursor::Right);
-        }
-        else if(textEdit->alignment() == Qt::AlignRight && cursor.atBlockEnd()){
-            textEdit->insertPlainText("\\r");
-            cursor.movePosition(QTextCursor::Right);
-            cursor.movePosition(QTextCursor::Right);
-        }
-        else if(textEdit->alignment() == Qt::AlignCenter && cursor.atBlockEnd()){
-            textEdit->insertPlainText("\\m");
-            cursor.movePosition(QTextCursor::Right);
-            cursor.movePosition(QTextCursor::Right);
+            if(textEdit->alignment() == Qt::AlignLeft){
+                textEdit->insertPlainText("\\l");
+                cursor.movePosition(QTextCursor::Right);
+                cursor.movePosition(QTextCursor::Right);
+            }
+            else if(textEdit->alignment() == Qt::AlignRight){
+                textEdit->insertPlainText("\\r");
+                cursor.movePosition(QTextCursor::Right);
+                cursor.movePosition(QTextCursor::Right);
+            }
+            else if(textEdit->alignment() == Qt::AlignCenter){
+                textEdit->insertPlainText("\\m");
+                cursor.movePosition(QTextCursor::Right);
+                cursor.movePosition(QTextCursor::Right);
+            }
         }
 
     }while(cursor.movePosition(QTextCursor::Right));
@@ -198,6 +217,7 @@ void NodeData::TextEditToPrimate(CustomDocument *textEdit)
     textEdit->selectAll();
     textEdit->setFontWeight(QFont::Normal);
     textEdit->setFontItalic(false);
+    qDebug()<<textEdit->toPlainText();
 }
 
 QString NodeData::filename() const{
