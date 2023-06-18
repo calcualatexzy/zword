@@ -1,5 +1,8 @@
 \documentclass{./source/Report}
 
+\std{许子绎 3210104838}
+\stdd{陈科 3210104844}
+\stddd{王励劼 3210101760}
 \name{许子绎、王励劼、陈科}
 \date{\today}
 \course{面向对象程序设计}
@@ -75,7 +78,11 @@ Qt中我们主要用到的模块有按键(Buttons)、标签(Label)、ListView和
     在每个段落结束加上一个段落对齐的特殊符号以表示段落对齐格式。
 \end{itemize}
 
-\subsubsection{查找与替换}
+
+
+\subsubsection{搜索迭代器}
+没有选择直接调用Qt自带的搜索函数，而是自己实现了一个搜索迭代器。其内部实现使用了KMP算法。\par
+
 使用了一个名为 SearchIterator 的类，用于在文本中查找指定的字符串。该类包含以下公共成员函数：
 
 \begin{itemize}
@@ -99,6 +106,34 @@ Qt中我们主要用到的模块有按键(Buttons)、标签(Label)、ListView和
 
 其内部使用了KMP字符串匹配算法，用于在一个文本串中查找一个模式串的出现位置。它的核心思想是利用已知信息来避免无效的比较，从而提高匹配效率。 KMP算法的实现基于一个跳转表(也称为失配函数或next数组)，用于存储模式串中每个位置的最长公共前后缀长度，此表会在初始化时构建。KMP的时间复杂度为O(m+n)，复杂度较低，尤其是在模式串较长时，效果更加明显。
 
+\subsubsection{文件列表}
+由于考虑到希望设计成一个较为简约的文本编辑器，我们一开始没有考虑设计分页功能，转而将分页功能转为类似vscode的分文件功能。\par
+左侧的文件列表通过点击能够切换不同文件。主要需要设计一个文件列表向量存储不同打开的文件。我们程序中使用了vector<NodeData*>变量存储所有列表，并设计NodeData*类型变量指向当前编辑文件。\par
+其实无论是分文件还是分页功能，都是一个记录和清空的实现，再通过按键的设置储存住该记录即可。
+
+\subsection{数据主要保存格式类NodeData}
+\subsubsection{primate有关函数}
+\begin{itemize}
+    \item QString primate() const;
+    \item void setPrimate(const QString\& primate);
+    \item void appendPrimate(const QString\& append, int pos);
+\end{itemize}\par
+实现了带格式字符的纯文本primate的相关操作。\par
+\subsubsection{content有关函数}
+\begin{itemize}
+    \item vector<QString> vcontent();
+    \item QString rowContent(int row);
+    \item void setRowContent(int row, const QString\& content);
+\end{itemize}\par
+实现了显示在TextEdit上，不含文本格式字符的纯文本content的相关操作。content使用vector<string>的格式进行存储和提取。
+\subsubsection{primate content TextEdit的转换函数}
+由于三者的转换关系涉及文本格式的添加和删除，因此是比较繁琐的一环。
+\begin{itemize}
+    \item void PrimateToContent();
+    \item void TextEditToPrimate(CustomDocument * textEdit);
+\end{itemize}\par
+
+\subsubsection{其余函数与格式的设置有关}
 % \begin{itemize}
 %     \item 保存文档的数据结构
 %     \item 如何处理连续输入文档时的内存分配情况，一次分配足够大还是每次都申请一段内存
@@ -109,7 +144,7 @@ Qt中我们主要用到的模块有按键(Buttons)、标签(Label)、ListView和
 %     \item 汉字的储存和显示
 % \end{itemize}
 
-\section{系统模块说明}
+\section{系统模块说明\&使用说明}
 %每一部分应有核心类说明
 \subsection{界面}
 界面总览如下：
@@ -123,6 +158,15 @@ Qt中我们主要用到的模块有按键(Buttons)、标签(Label)、ListView和
         \centering
         \includegraphics[width=2.5in]{1686842086143}
         \caption{加入文本界面}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=2.5in]{1687095885430}
+            \caption{搜索替换框的总界面展示}
     \end{minipage}
 \end{figure}
 
@@ -142,7 +186,7 @@ Qt中我们主要用到的模块有按键(Buttons)、标签(Label)、ListView和
     \item 文本的粘贴使用快捷键 Ctrl+V，或者右键文本区选择 Paste
     \item 文本的全选使用快捷键 Ctrl+A，或者右键文本区选择 Select All    
     \item 文本搜索使用快捷键 Ctrl+F，或左上角的搜索按钮
-    \item 文本替换使用快捷键 Ctrl+H，或左上角展开后的替换按钮
+    \item 文本替换使用快捷键 Ctrl+H，或左上角展开后的替换按钮。当然，也可以在搜索到黄色高亮文本后，按Enter键，即可实现替换。
     \item 文本的格式与颜色设置分别使用中间的两个按钮，为了实现的简单性，这两个按钮只能对整个文本进行设置，无法对文本的某一部分进行设置。
 \end{itemize}
 
@@ -169,6 +213,8 @@ Qt中我们主要用到的模块有按键(Buttons)、标签(Label)、ListView和
 \end{itemize}
 
 
+
+
 \section{设计难点与解决方案}
 \subsection{Qt学习与使用问题}
 本次项目最大的难点还是在于Qt的学习和使用。由于Qt为使用者搭建了一个非常完整但同时很基本的开发环境，因此在实现文本编辑器的过程中，绝大时间都花费在通过官网和各类资源查找Qt某个具体函数的使用方法。而项目代码中的很大一部分都在调用Qt自带函数、重载或override其中某个基本函数等。
@@ -182,27 +228,96 @@ Qt的ui搭建使用的是Qt自带的ui设计器，因此在实现过程中，需
 
 此外，由于许多编辑器的功能是基于已保存的文本实现的，因此在实现过程中，需要注意在文本未保存时的各类操作的正确性。
 
-\subsection{文本搜索的实现}
-没有选择直接调用Qt自带的搜索函数，而是自己实现了一个搜索迭代器。这个迭代器主要使用了KMP算法。在实现过程中，由于KMP算法的特殊性，需要对文本进行预处理，因此需要注意迭代器的构造时next数字的构造与析构时的正确性。
+\subsection{文本搜索实现}
+在实现过程中，由于KMP算法的特殊性，需要对文本进行预处理，因此需要注意迭代器的构造时next数字的构造与析构时的正确性。
 
 
-\section{总结}
+\section{总结\&感想}
+\subsection{开发经验}
+\begin{itemize}
+    \item 认识到Qt的强大，第一次深入了解Qt
+    \item 交互程序debug的不容易
+    \item 完整的开发经验，Github仓库、Qt程序开发、Latex文本开发、Markdown中期程序说明、Debug和Release版本的发放、开发日志的完整记录。
+\end{itemize}
+\subsection{程序不足}
+\begin{itemize}
+    \item 仍然有一些bug值得完善。
+    \item 对文字字体和颜色的更改仅处理了全部文字（所有文字的更改格式记录会比较麻烦）
+    \item 如果时间充沛，可以考虑引入sql数据库等进行更丰富的保存。
+    \item 实现了分文件功能，但没有实现分页功能
+\end{itemize}
+
+
 
 \newpage
 \appendix
 
 \section{项目开发日志}
 \subsection{开发准备}
+4月25日到5月6日
 \subsubsection{环境配置}
-使用 Qt6.5.0 配合 Qt Creator 或 VS2022 作为开发环境，\href{https://blog.csdn.net/m0_62919535/article/details/129340079}{配置 VS + Qt 的参考教程}。
+ 于4月25日到5月6日完成了Qt装载以及环境的配置。
+使用 Qt6.5.0 配合 Qt Creator 或 VS2022 作为开发环境，\href{https://blog.csdn.net/m0_62919535/article/details/129340079}{配置 VS + Qt 的参考教程}。Qt为跨平台C++图形用户界面应用程序开发框架。
 
 \subsubsection{合作方式}
-使用 github 开设私人仓库并设置合作者实现合作开发，可能使用 PR (Pull Requset) 实现更好的整合。
+于同期使用 github 开设私人仓库并设置合作者实现合作开发，可能使用 PR (Pull Requset) 实现更好的整合。\par
+\href{https://github.com/calcualatexzy/zword.git}{Github仓库}.
+该仓库将于验收当天开源Public。
 
 \subsubsection{文档写著}
-使用 \LaTeX 进行文档的书写。
-
+  于同期在在线LaTeX编辑器网站Overleaf创建了文档，在线共享编辑。
 \subsection{项目搭建}
+5月7日到6月10日
+\subsubsection{文本编辑器框架搭建}
+5月7日到5月13日
+使用了Qt自带的ui格式进行设计，通过基本模块拖动并安排其位置关系进行了页面的设计，完成了文本编辑器基本框架的搭建。
+\subsubsection{功能实现}
+5月14日到5月20日
 
+\paragraph{文本编辑基本功能：}
 
+利用部分Qt自带函数与自己编写的函数，实现了文字输入，回退，插入，删除，撤销，重做等文本编辑的基本功能
+
+5月21日到5月25日
+
+\paragraph{文本保存与打开功能：}
+
+对文本编辑器中的文件进行了两类方式保存，保存带有格式标识的显示文本以及最终的显示文本，格式均为txt。
+
+5月26日到5月31日
+
+\paragraph{文字格式设置功能：}
+
+为使显示文本格式能够在保存文件中显示，我们借鉴了Markdown中应用特殊符号设置的显示格式实现字体格式的设置，实现了加粗与斜体格式，字体、字号与颜色格式，段落对齐格式三方面的文本格式设置。
+
+6月1日到6月10日
+
+\paragraph{查找与替换功能：}
+\begin{figure}[!htbp]
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=2.5in]{1687095443666}
+        \caption{Github上6月部分commit}
+    \end{minipage}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=2.5in]{1687095622257}
+        \caption{Github上5月部分commit}
+    \end{minipage}
+\end{figure}
+使用了Knuth-Morris-Pratt字符串查找算法，自己编写了搜索迭代器，实现了文本的搜索；同时对查找到的文字，实现调用下方的replace进行替换。
+
+\subsection{优化改进及后期总结}
+6月11日到6月18日
+
+\subsubsection{优化功能}
+
+添加了文档排版设置，同时进行了贴图
+
+\subsubsection{添加了部分快捷键}
+
+扩展实现了键盘与Qt界面的交互，编写了部分按键函数，添加了ctrl+o：打开文本；ctrl+n：新建文本；ctrl+z：撤销文本等快捷键，使得快捷键功能基本与主流编辑器相符，使用更方便。
+
+\subsection{Release版本发布}
+Qt使用Release编辑完后，再使用windeployqt发布Release版本文件。并将版本文件发布至Github上。
 \end{document}

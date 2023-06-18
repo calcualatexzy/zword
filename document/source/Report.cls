@@ -74,6 +74,9 @@
 % 自定义信息参数传递
   % \newcommand\major[1]{\def\@major{#1}}
   \newcommand\name[1]{\def\@name{#1}}
+  \newcommand\std[1]{\def\@std{#1}}
+  \newcommand\stdd[1]{\def\@stdd{#1}}
+  \newcommand\stddd[1]{\def\@stddd{#1}}
   % \newcommand\stuid[1]{\def\@stuid{#1}}
   % \newcommand\college[1]{\def\@college{#1}}
   \renewcommand\date[1]{\def\@date{#1}}
@@ -95,31 +98,40 @@
   % 页边距
   \geometry{top=1in,bottom=1in,left=0.75in,right=0.75in}
   % 目录深度
-  \setcounter{secnumdepth}{3}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
   % caption距离
   \setlength{\abovecaptionskip}{4pt}
   \setlength{\belowcaptionskip}{4pt}
 % 
 
 % 多级标题
-  %目录居中
-  \renewcommand*\contentsname{\hfill 目录 \hfill}
-  % 命名格式
-  \renewcommand\thesection{\Roman{section}}
-  \renewcommand\thesubsection{\arabic{subsection}.}
-  \renewcommand\thesubsubsection{\thesubsection\arabic{subsubsection}}
-  % 序号格式
-	\setlist[enumerate,1]{label=\arabic*),itemindent=2em,itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
-	\setlist[enumerate,2]{label=\alph*.,itemindent=1em,itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
-	\setlist[itemize,1]{itemindent=2em,itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
-	\setlist[itemize,2]{itemindent=1em,itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
-  % 字体
-  \titleformat*{\section}{\large\bfseries}
-  \titleformat*{\subsection}{\normalsize\bfseries}
-  \titleformat*{\subsubsection}{\normalsize}
-  % 间隔
-  \titlespacing{\subsection}{1em}{*4}{*1.5}
-  \titlespacing{\subsubsection}{1em}{*4}{*1.5}
+%目录居中
+\renewcommand*\contentsname{\hfill 目录 \hfill}
+%多级标题目录格式
+\titlecontents{section}[0pt]{\addvspace{1pc}\bfseries}{\thecontentslabel\quad}{}{\titlerule*[8pt]{$\cdot$}\contentspage}
+\titlecontents{subsection}[1em]{\vspace{0.1cm}\normalsize}{\thecontentslabel\quad}{}{\titlerule*[8pt]{$\cdot$}\contentspage}
+\titlecontents{subsubsection}[2em]{\vspace{0.1cm}\small}{\thecontentslabel\quad}{}{\titlerule*[8pt]{$\cdot$}\contentspage}
+\titlecontents{paragraph}[2em]{\vspace{0.1cm}\small}{\thecontentslabel\quad}{}{\titlerule*[8pt]{$\cdot$}\contentspage}
+%多级标题命名格式
+\renewcommand\thesection{\Roman{section}}
+\renewcommand\thesubsection{\arabic{subsection}.}
+\renewcommand\thesubsubsection{\thesubsection\arabic{subsubsection}}
+%多级标题字体
+\titleformat*{\section}{\large\bfseries}
+\titleformat*{\subsection}{\normalsize\bfseries}
+\titleformat*{\subsubsection}{\normalsize\slshape}
+\titleformat*{\paragraph}{\small\bfseries}
+%多级标题间隔
+\titlespacing{\section}{0pt}{*1.5}{*1.5}
+\titlespacing{\subsection}{2em}{*1}{*1}
+\titlespacing{\subsubsection}{2em}{*1}{*1}
+\titlespacing{\paragraph}{0pt}{*1}{*1}
+%多级序号格式
+\setlist[enumerate,1]{label=\arabic*),itemindent=2em,itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
+\setlist[enumerate,2]{label=\alph*.,itemindent=1em,itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
+\setlist[itemize,1]{itemindent=2em,itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
+\setlist[itemize,2]{itemindent=1em,itemsep=0pt,partopsep=0pt,parsep=\parskip,topsep=5pt}
 %
 
 % 图片路径（实现多种文件夹都可以放图片
@@ -179,7 +191,10 @@
         \begin{tabular}{p{5em}p{12em}}
 			\bfseries{课程名称: } & \zjuu[180pt]\@course \\ 
 			\bfseries{项\hphantom{两格}目: }     & \zjuu[180pt]\@expname   \\ 
-			\bfseries{组\hphantom{两格}员: }     & \zjuu[180pt]\@name   \\ 
+			% \bfseries{组\hphantom{两格}员: }     & \zjuu[180pt]\@name   \\ 
+                \bfseries{姓名学号：}     & \zjuu[180pt]\@std  \\ 
+                \bfseries{\hphantom{五格的占位}}     & \zjuu[180pt]\@stdd  \\
+                \bfseries{\hphantom{五格的占位}}     & \zjuu[180pt]\@stddd  \\
 			\bfseries{指导老师: } & \zjuu[180pt]\@instructor  \\ 
         \end{tabular}
       \end{center}
