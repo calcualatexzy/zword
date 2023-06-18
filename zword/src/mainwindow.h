@@ -120,7 +120,7 @@ private slots:
     void alignLeft();
     void alignMiddle();
     void alignRight();
-    void saveNodeData();
+    bool saveNodeData();
     bool saveAsNodeData();
     void savePrimateData();
     void openNodeData();

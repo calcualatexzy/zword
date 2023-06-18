@@ -514,11 +514,8 @@ void MainWindow::onNewNoteButtonClicked()
     z_newNoteButton->setIcon(QIcon(QStringLiteral(":/images/newNote_Regular.png")));
 
     if(!z_vNodeData.empty()){
-        saveNodeData();
+        if(!saveNodeData())return;
     }
-    NodeData* newNodeData = new NodeData;
-    z_vNodeData.push_back(newNodeData);
-    z_currentNodeData = newNodeData;
     saveAsNodeData();
 }
 
@@ -595,7 +592,7 @@ void MainWindow::onDotsButtonClicked()
 
 void MainWindow::onStyleEditorButtonClicked()
 {
-    saveNodeData();
+    if(!saveNodeData())return;
     bool fontSelected;
     QFont font = QFontDialog::getFont(&fontSelected, this);
     if (fontSelected)
@@ -625,7 +622,7 @@ void MainWindow::onExpendReplaceButtonClicked(){
 }
 
 void MainWindow::onSearchButtonClicked(){
-    // saveNodeData();
+    if(!saveNodeData())return;
     z_search = z_searchEdit->text();
     if(z_search.isEmpty()){
         onSearchClearButtonClicked();
@@ -738,23 +735,21 @@ void MainWindow::alignRight()
     z_textEdit->setTextCursor(cursor);
 }
 
-void MainWindow::saveNodeData()
+bool MainWindow::saveNodeData()
 {   
     QString content;
     if(z_currentNodeData==nullptr)content = z_textEdit->toPlainText();
     if(z_vNodeData.empty()||z_currentNodeData==nullptr){
-        NodeData* newNodeData = new NodeData;
-        z_vNodeData.push_back(newNodeData);
-        z_currentNodeData = *(z_vNodeData.end() - 1);
-        if(!saveAsNodeData())return ;
+        if(!saveAsNodeData())return 0;
     }
     if(!content.isEmpty())z_textEdit->setText(content);
     QString filename;
     filename = z_currentNodeData->filename();
+    qDebug() << "save Node data at "<<filename;
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly | QFile::Text)) {
         QMessageBox::warning(this, "Warning", "Cannot save file: " + file.errorString());
-        return;
+        return 0;
     }
     z_editorDateLabel->setText(filename);
     QTextStream out(&file);
@@ -764,6 +759,7 @@ void MainWindow::saveNodeData()
     file.close();
     z_currentNodeData->PrimateToContent();
     setCurrentNodetoText();
+    return 1;
 }
 
 void MainWindow::savePrimateData()
@@ -881,6 +877,9 @@ bool MainWindow::saveAsNodeData()
     filename = QFileDialog::getSaveFileName(this, "Save");
     if (filename.isEmpty())
         return 0;
+    NodeData* newNodeData = new NodeData;
+    z_vNodeData.push_back(newNodeData);
+    z_currentNodeData = newNodeData;
     z_currentNodeData->setFilename(filename);
 
     z_editorDateLabel->setText(z_currentNodeData->filename());
@@ -907,7 +906,7 @@ void MainWindow::onColorButtonClicked(){
     // if(color.isValid()){
     //     z_textEdit->setTextColor(color);
     // }
-    saveNodeData();
+    if(!saveNodeData())return;
     QColorDialog dialog;
     dialog.setOption(QColorDialog::ShowAlphaChannel, false);
     int r=0,g=0,b=0;
